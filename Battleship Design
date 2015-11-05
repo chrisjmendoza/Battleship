@@ -1,0 +1,25 @@
+public void attack(boolean player, int location)
+	sends an attack against given player at location
+	throws exceptions if wrong player is picked, location is out of bounds, or location has already been picked
+
+public board getState(boolean player)
+	returns a copy of given player's board state
+		must be a copy for security reasons
+
+private ship[] board
+	board should be an array of Tile objects
+		Tile objects store whether or not a location has been hit and a pointer to a ship object
+			We need to know both if a location has been hit and which ship it contains
+
+class Tile
+	stores a boolean representing whether or not it's been hit and points to corresponding ship
+	
+class Ship
+	stores a length and number of hits taken
+	
+place
+	places a ship in a desired location and position
+		must check to see if location is valid
+		
+reset
+	resets game to initial state
