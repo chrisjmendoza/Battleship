@@ -17,6 +17,18 @@ public interface BattleshipModelInterface {
 	 */
 	
 	/**
+	 * Get-er for if the game is in Setup Mode.
+	 * @return true if game is in setup mode.
+	 */
+	public bool isInSetupMode();
+	
+	/**
+	 * Get-er for if the game is Play Mode.
+	 * @return true if game is in play mode.
+	 */
+	public bool isInSetupMode();
+	
+	/**
 	 * Places Ship at the given location
 	 * @param col column position to place ship
 	 * @param row row position to place the ship
