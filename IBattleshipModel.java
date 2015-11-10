@@ -78,9 +78,9 @@ public interface IBattleshipModel {
 	 * @param row row you wish to attack on the opposing players board
 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
 	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
-	 * @return returns an Status  enum representing Status of attack
+	 * @return returns an FireResult  enum representing Status of attack
 	 */
-	public Status attackLocation(int col, char row);
+	public FireResult attackLocation(int col, char row);
 	
 	/**
 	 * This method returns if the arguments result in a valid place to attack
@@ -146,7 +146,7 @@ class Tile{
 	private boolean ship;
 }
 
-enum Status {
+enum FireResult {
 	// return status, a miss
 	MISS, 
 	// return status, a hit, doesn't sink a ship
