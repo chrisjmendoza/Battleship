@@ -177,7 +177,7 @@ enum ShipType {
 	CRUISER, 
 	BATTLESHIP, 
 	AIRCRAFT_CARRIER	
-};
+}
 
 /** 
  * List of actions resulting from firing at opponent's board
@@ -195,4 +195,4 @@ enum FireResult {
 	SUNK_BATTLESHIP, 
 	// return status, a hit, sunk aircraft carrier
 	SUNK_AIRCRAFT_CARRIER
-};
+}
