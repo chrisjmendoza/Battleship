@@ -92,20 +92,32 @@ public interface BattleshipModelInterface {
 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
 	 * @return if the place is a valid way to attack the ship
 	 */
-	public bool isValidAttackLocation(int col, char row);
+	public boolean isValidAttackLocation(int col, char row);
 	
+	/**
+	 * Checks if the current players turn is that of player one.
+	 * @return true if the active turn is player 1.
+	 */
+	public boolean isPlayerOneTurn();
+	
+	
+	/**
+	 * Checks if the current players turn is that of player two.
+	 * @return true if the active turn is player 2.
+	 */
+	public boolean isPlayerTwoTurn();
 	
 	/**
 	 * Allows view of player 1's board
 	 * @return an array of Strings representing player 2's attack board
 	 */
-	public Tile[][] getBoardStatePlayer1();
+	public Tile[][] getBoardStatePlayerOne();
 	
 	/**
 	 * Allows view of player 2's board
 	 * @return an array of Strings representing player 2's board
 	 */
-	public Tile[][] getBoardStatePlayer2();
+	public Tile[][] getBoardStatePlayerTwo();
 	
 	/**
 	 * Tests to see if game is over
