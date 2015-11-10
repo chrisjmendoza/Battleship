@@ -136,12 +136,16 @@ public interface IBattleshipModel {
  * A helper class storing a ships type, length, and damage level
  */
 public interface IShip {
-	
+	/**
+	 * 
+	 */
 	public ShipType getShipType(); 
 	
-	private String type;
-	private int length;
-	private int hits;
+	/**
+	 * 
+	 * @return a list of cells the board is consuming with the letter (i.e. B7)
+	 */
+	public string[] getConsumingCells();
 }
 
 public interface ITile {
