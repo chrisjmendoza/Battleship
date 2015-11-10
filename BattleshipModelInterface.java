@@ -62,6 +62,10 @@ public interface BattleshipModelInterface {
 	 * 6.	That the allowed amount of that ship type have not been already placed by
 	 * that player.
 	 * 
+	 * @param col column position to place ship
+	 * @param row row position to place the ship
+	 * @param ship the type of ship being placed, used to test validity of input
+	 * @player true for player 1, false for player 2
 	 * @throws IllegalStateException is not in setup mode
 	 * @returns true if placement is valid
 	 */
@@ -69,10 +73,24 @@ public interface BattleshipModelInterface {
 	
 	/**
 	 * Sends an attack to given position
-	 * @param location position of attack
-	 * @return returns an int representing Status of attack based off the enum
+	 * @param col column position to place ship
+	 * @param row row position to place the ship
+	 * @throws IllegalStateException if game is not in Play Mode or if game is over
+	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
+	 * @return returns an Status  enum representing Status of attack
 	 */
-	public int attackLocation(int location);
+	public Status attackLocation(int col, char row);
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param col column position to place ship
+	 * @param row row position to place the ship
+	 * @throws IllegalStateException if game is not in Play Mode or if game is over
+	 * @return if the place is a valid way to attack the ship
+	 */
+	public bool isValidAttackLocation(int col, char row);
 	
 	/**
 	 * Changes turns between the players
