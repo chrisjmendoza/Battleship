@@ -26,7 +26,7 @@ public interface BattleshipModelInterface {
 	 * Get-er for if the game is Play Mode.
 	 * @return true if game is in play mode.
 	 */
-	public boolean isInSetupMode();
+	public boolean isInPlayMode();
 	
 	/**
 	* @param the player the game shall start with, true being player 1, false being player 2
