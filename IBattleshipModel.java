@@ -113,14 +113,14 @@ public interface IBattleshipModel {
 	 * @param player true for player 1, false for player 2
 	 * @return an array of Strings representing player 2's attack board
 	 */
-	public DefenseTileStatus[][] getBoardStateDefenseBoard(boolean player);
+	public DefenseTileStatus[][] getDefenseBoard(boolean player);
 	
 	/**
 	 * Allows view of the offensive boards
 	 * @param player true for player 1, false for player 2
 	 * @return an array of Strings representing player 2's board
 	 */
-	public OffensiveTileStatus[][] getBoardStateOffensiveBoard(boolean player);
+	public OffensiveTileStatus[][] getOffensiveBoard(boolean player);
 	
 	/**
 	 * Tests to see if game is over
