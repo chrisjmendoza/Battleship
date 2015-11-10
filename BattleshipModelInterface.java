@@ -8,7 +8,7 @@
  * @author Peter Kim
  * @author Sai Chang
  */
-public interface BattleshipModelInterface {
+public interface IBattleshipModel {
 	
 	/*
 	 * Suggesting an array of Tiles to store and access board
@@ -97,13 +97,14 @@ public interface BattleshipModelInterface {
 	/**
 	 * Checks if the current players turn is that of player one.
 	 * @return true if the active turn is player 1.
+	 * @throws IllegalStateException if not in play mode or game is over
 	 */
 	public boolean isPlayerOneTurn();
-	
 	
 	/**
 	 * Checks if the current players turn is that of player two.
 	 * @return true if the active turn is player 2.
+	 * @throws IllegalStateException if not in play mode or game is over
 	 */
 	public boolean isPlayerTwoTurn();
 	
