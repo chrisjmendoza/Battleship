@@ -18,11 +18,29 @@ public interface BattleshipModelInterface {
 	
 	/**
 	 * Places Ship at the given location
-	 * @param location position to place ship
+	 * @param col column position to place ship
+	 * @param row row position to place the ship
 	 * @param ship the type of ship being placed, used to test validity of input
-	 * @throws IllegalArgumentException thrown if location is filled or not on board
+	 * @player true for player 1, false for player 2
+	 * @throws IllegalArgumentException if same arguments return false for isValidShipPlacement method
+	 * @throws IllegalStateException is not in setup mode
 	 */
-	public void placeShip(int location, Ship ship);
+	public void placeShip(int col, char row, Ship ship, boolean player);
+	
+	/**
+	 * Method checks that placement of the give ship is valid by meeting the following conditions:
+	 * 1.	That the column is between A-K (inclusive)
+	 * 2.	That the row is bewtween 1-10 (inclusive)
+	 * 3.	That the ship does not overlap with any ships by sharing cells
+	 * 4.	That all of the peices of a ship are on the board
+	 * 5.	That the ships do not overlap in an diagnoal fashion
+	 * 6.	That the allowed amount of that ship type have not been already placed by
+	 * that player.
+	 * 
+	 * @throws IllegalStateException is not in setup mode
+	 * @returns true if placement is valid
+	 */
+	public boolean isValidShipPlacement(int col, char row, Ship ship, boolean player);
 	
 	/**
 	 * Sends an attack to given position
