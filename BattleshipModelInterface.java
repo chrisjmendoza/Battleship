@@ -35,8 +35,9 @@ public interface BattleshipModelInterface {
 	public void moveToSetup(boolean player);
 	
 	/**
-	* Should return true/false if all the correct ships have been placed for the given player
+	* Returns true/false if all the correct ships have been placed for the given player
 	* @param player true for player 1, false for player 2
+	* @return true/false if all ships have been placed for the given player
 	*/
 	public bool areAllShipsPlaced(boolean player);
 	
