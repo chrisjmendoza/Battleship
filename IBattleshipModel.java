@@ -97,16 +97,10 @@ public interface IBattleshipModel {
 	/**
 	 * Checks if the current players turn is that of player one.
 	 * @return true if the active turn is player 1.
+	 * @return false if the active turn is player 2.
 	 * @throws IllegalStateException if not in play mode or game is over
 	 */
-	public boolean isPlayerOneTurn();
-	
-	/**
-	 * Checks if the current players turn is that of player two.
-	 * @return true if the active turn is player 2.
-	 * @throws IllegalStateException if not in play mode or game is over
-	 */
-	public boolean isPlayerTwoTurn();
+	public boolean isPlayerTurn();
 	
 	/**
 	 * Allows view of defensive boards
