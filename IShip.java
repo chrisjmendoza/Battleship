@@ -1,5 +1,5 @@
 /**
- * A helper class storing ships type, length, and damage level
+ * A helper interface storing ships type, length, and damage level
  */
 public interface IShip {
 	/**
