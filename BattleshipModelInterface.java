@@ -72,9 +72,10 @@ public interface BattleshipModelInterface {
 	public boolean isValidShipPlacement(int col, char row, Ship ship, boolean player);
 	
 	/**
-	 * Sends an attack to given position
-	 * @param col column position to place ship
-	 * @param row row position to place the ship
+	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
+	 * 
+	 * @param col column you wish to attack on the opposing players board
+	 * @param row row you wish to attack on the opposing players board
 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
 	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
 	 * @return returns an Status  enum representing Status of attack
@@ -82,20 +83,17 @@ public interface BattleshipModelInterface {
 	public Status attackLocation(int col, char row);
 	
 	/**
+	 * This method returns if the arguments result in a valid place to attack
+	 * 1.	The player has not attacked the given square before
+	 * 2.	The square is within the board (A-J & 1-10)
 	 * 
-	 * 
-	 * 
-	 * @param col column position to place ship
-	 * @param row row position to place the ship
+	 * @param col column you wish to attack on the opposing players board
+	 * @param row row you wish to attack on the opposing players board
 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
 	 * @return if the place is a valid way to attack the ship
 	 */
 	public bool isValidAttackLocation(int col, char row);
 	
-	/**
-	 * Changes turns between the players
-	 */
-	public boolean playerTurn();
 	
 	/**
 	 * Allows view of player 1's board
