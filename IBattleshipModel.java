@@ -158,7 +158,5 @@ enum Status {
 	// return status, a hit, sunk battleship
 	SUNK_BATTLESHIP, 
 	// return status, a hit, sunk aircraft carrier
-	SUNK_AIRCRAFT_CARRIER, 
-	// return status, location was already played or invalid
-	DO_OVER
+	SUNK_AIRCRAFT_CARRIER
 };
