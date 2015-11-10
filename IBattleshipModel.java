@@ -50,7 +50,7 @@ public interface IBattleshipModel {
 	 * @throws IllegalArgumentException if same arguments return false for isValidShipPlacement method
 	 * @throws IllegalStateException is not in setup mode
 	 */
-	public void placeShip(int col, char row, Ship ship, boolean player);
+	public void placeShip(int col, char row, IShip ship, boolean player);
 	
 	/**
 	 * Method checks that placement of the given ship is valid by meeting the following conditions:
@@ -69,7 +69,7 @@ public interface IBattleshipModel {
 	 * @throws IllegalStateException is not in setup mode
 	 * @returns true if placement is valid
 	 */
-	public boolean isValidShipPlacement(int col, char row, Ship ship, boolean player);
+	public boolean isValidShipPlacement(int col, char row, IShip ship, boolean player);
 	
 	/**
 	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
@@ -135,16 +135,38 @@ public interface IBattleshipModel {
 /**
  * A helper class storing a ships type, length, and damage level
  */
-class Ship{
+public interface IShip {
+	
+	public ShipType getShipType(); 
+	
 	private String type;
 	private int length;
 	private int hits;
 }
 
-class Tile{
-	private boolean hit;
-	private boolean ship;
+public interface ITile {
+	/**
+	 * 
+	 */
+	public bool isFiredAt();
+	
+	/**
+	 * 
+	 */
+	public bool hasBeenFiredAt();
+	
+	/**
+	 * 
+	 */
+	public FireResult FireAt(); 
 }
+
+enum ShipType {
+	DESTROYER, 
+	CRUISER, 
+	BATTLESHIP, 
+	AIRCRAFT_CARRIER	
+};
 
 enum FireResult {
 	// return status, a miss
