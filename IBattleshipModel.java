@@ -112,13 +112,13 @@ public interface IBattleshipModel {
 	 * Allows view of player 1's board
 	 * @return an array of Strings representing player 2's attack board
 	 */
-	public Tile[][] getBoardStatePlayerOne();
+	public ITile[][] getBoardStatePlayerOne();
 	
 	/**
 	 * Allows view of player 2's board
 	 * @return an array of Strings representing player 2's board
 	 */
-	public Tile[][] getBoardStatePlayerTwo();
+	public ITile[][] getBoardStatePlayerTwo();
 	
 	/**
 	 * Tests to see if game is over
