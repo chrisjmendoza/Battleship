@@ -20,13 +20,13 @@ public interface BattleshipModelInterface {
 	 * Get-er for if the game is in Setup Mode.
 	 * @return true if game is in setup mode.
 	 */
-	public bool isInSetupMode();
+	public boolean isInSetupMode();
 	
 	/**
 	 * Get-er for if the game is Play Mode.
 	 * @return true if game is in play mode.
 	 */
-	public bool isInSetupMode();
+	public boolean isInSetupMode();
 	
 	/**
 	* @param the player the game shall start with, true being player 1, false being player 2
@@ -39,7 +39,7 @@ public interface BattleshipModelInterface {
 	* @param player true for player 1, false for player 2
 	* @return true/false if all ships have been placed for the given player
 	*/
-	public bool areAllShipsPlaced(boolean player);
+	public boolean areAllShipsPlaced(boolean player);
 	
 	/**
 	 * Places Ship at the given location
