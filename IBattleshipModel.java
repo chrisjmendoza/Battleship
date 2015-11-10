@@ -145,7 +145,9 @@ public interface IShip {
 	public String[] getConsumingCells();
 }
 
-
+/**
+ * Defense tile status calls
+ */
 enum DefenseTileStatus {
 	OCEAN,
 	SHIP_DESTOYER,
@@ -154,6 +156,9 @@ enum DefenseTileStatus {
 	SHIP_CARRIER
 }
 
+/**
+ * Offensive tile status calls
+ */
 enum OffensiveTileStatus{
 	UNKNOWN,
 	MISS,
@@ -164,6 +169,9 @@ enum OffensiveTileStatus{
 	SUNK_CARRIER
 }
 
+/**
+ * Lists the names of the ships
+ */
 enum ShipType {
 	DESTROYER, 
 	CRUISER, 
@@ -171,6 +179,9 @@ enum ShipType {
 	AIRCRAFT_CARRIER	
 };
 
+/** 
+ * List of actions resulting from firing at opponent's board
+ */
 enum FireResult {
 	// return status, a miss
 	MISS, 
