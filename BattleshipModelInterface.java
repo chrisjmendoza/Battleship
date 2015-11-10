@@ -29,6 +29,18 @@ public interface BattleshipModelInterface {
 	public bool isInSetupMode();
 	
 	/**
+	* @param the player the game shall start with, true being player 1, false being player 2
+	* @throws IllegalStateException if not all ships have been placed for both players
+	*/
+	public void moveToSetup(boolean player);
+	
+	/**
+	* Should return true/false if all the correct ships have been placed for the given player
+	* @param player true for player 1, false for player 2
+	*/
+	public bool areAllShipsPlaced(boolean player);
+	
+	/**
 	 * Places Ship at the given location
 	 * @param col column position to place ship
 	 * @param row row position to place the ship
