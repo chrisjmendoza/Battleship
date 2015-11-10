@@ -138,6 +138,7 @@ public interface IBattleshipModel {
 public interface IShip {
 	/**
 	 * Get the type of the ship that this instance is.
+	 * @return ShipType get the Ship. 
 	 */
 	public ShipType getShipType(); 
 	
