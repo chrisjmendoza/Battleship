@@ -53,7 +53,7 @@ public interface BattleshipModelInterface {
 	public void placeShip(int col, char row, Ship ship, boolean player);
 	
 	/**
-	 * Method checks that placement of the give ship is valid by meeting the following conditions:
+	 * Method checks that placement of the given ship is valid by meeting the following conditions:
 	 * 1.	That the column is between A-K (inclusive)
 	 * 2.	That the row is bewtween 1-10 (inclusive)
 	 * 3.	That the ship does not overlap with any ships by sharing cells
