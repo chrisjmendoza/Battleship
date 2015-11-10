@@ -145,19 +145,19 @@ public interface IShip {
 	 * 
 	 * @return a list of cells the board is consuming with the letter (i.e. B7)
 	 */
-	public string[] getConsumingCells();
+	public String[] getConsumingCells();
 }
 
 public interface ITile {
 	/**
 	 * 
 	 */
-	public bool isFiredAt();
+	public boolean isFiredAt();
 	
 	/**
 	 * 
 	 */
-	public bool hasBeenFiredAt();
+	public boolean hasBeenFiredAt();
 	
 	/**
 	 * 
