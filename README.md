@@ -48,40 +48,32 @@ Here is an example:
  */
 public int makeShot(char row, int col);
 
-/**
- * return status from makeShot, a miss
- */
+// return status from makeShot, a miss
+
 public static final int MISS = 0;
 
-/**
- * return status from makeShot, a hit, doesn't sink a ship
- */
+//return status from makeShot, a hit, doesn't sink a ship
+
 public static final int HIT = 1;
 
-/**
- * return status from makeShot, a hit, sunk destroyer
- */
+//return status from makeShot, a hit, sunk destroyer
+
 public static final int SUNK_DESTROYER = 2;
 
-/**
- * return status from makeShot, a hit, sunk cruiser
- */
+//return status from makeShot, a hit, sunk cruiser
+
 public static final int SUNK_CRUISER = 3;
 
-/**
- * return status from makeShot, a hit, sunk battleship
- */
+//return status from makeShot, a hit, sunk battleship
+
 public static final int SUNK_BATTLESHIP = 4;
 
-/**
- * return status from makeShot, a hit, sunk aircraft carrier
- */
+//return status from makeShot, a hit, sunk aircraft carrier
+
 public static final int SUNK_AIRCRAFT_CARRIER = 5;
 
-/**
- * return status from makeShot, location was already played or 
- * was invalid
- */
+//return status from makeShot, location was already played or was invalid
+
 public static final int DO_OVER = -1;
 
 Here is an alternate example for the same method. Notice for this version, there are helper types declared: a class Location and an enum Status.
@@ -96,9 +88,8 @@ public Status makeShot(Location loc);
 
 //----- separate top-level declarations
 
-/**
- * A helper class for location
- */
+//A helper class for location
+
 class Location {
    /**
     * The row
