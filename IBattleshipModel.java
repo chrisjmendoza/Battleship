@@ -137,7 +137,7 @@ public interface IBattleshipModel {
  */
 public interface IShip {
 	/**
-	 * 
+	 * Get the type of the ship that this instance is.
 	 */
 	public ShipType getShipType(); 
 	
@@ -148,19 +148,20 @@ public interface IShip {
 	public String[] getConsumingCells();
 }
 
+
+
+//WHY DO YOU DO THE THINGS
 public interface ITile {
 	/**
 	 * 
-	 */
-	public boolean isFiredAt();
-	
-	/**
-	 * 
+	 * @return true/false if this tile has been fired at
 	 */
 	public boolean hasBeenFiredAt();
 	
 	/**
 	 * 
+	 * @throws IllegalStateException if this Tile has already been fired at.
+	 * @return FireResult for what the result of the "firing" was. 
 	 */
 	public FireResult FireAt(); 
 }
