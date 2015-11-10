@@ -32,6 +32,11 @@ public interface BattleshipModelInterface {
 	public int attackLocation(int location);
 	
 	/**
+	 * Changes turns between the players
+	 */
+	public boolean playerTurn();
+	
+	/**
 	 * Allows view of player 1's board
 	 * @return an array of Strings representing player 2's attack board
 	 */
