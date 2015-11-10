@@ -30,7 +30,7 @@ public interface BattleshipModelInterface {
 	
 	/**
 	* @param the player the game shall start with, true being player 1, false being player 2
-	* @throws IllegalStateException if not all ships have been placed for both players
+	* @throws IllegalStateException if not all ships have been placed for both players or if game is already in play mode
 	*/
 	public void moveToSetup(boolean player);
 	
