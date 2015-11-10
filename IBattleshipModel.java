@@ -8,7 +8,7 @@
  * @author Peter Kim
  * @author Sai Chang
  */
-public interface IBattleshipModel {
+public interface IBattleshipModel extends IShip{
 	
 	/*
 	 * Suggesting an array of Tiles to store and access board
