@@ -46,7 +46,7 @@ public interface IBattleshipModel {
 	 * @param col column position to place ship
 	 * @param row row position to place the ship
 	 * @param ship the type of ship being placed, used to test validity of input
-	 * @player true for player 1, false for player 2
+	 * @param player true for player 1, false for player 2
 	 * @throws IllegalArgumentException if same arguments return false for isValidShipPlacement method
 	 * @throws IllegalStateException is not in setup mode
 	 */
@@ -109,16 +109,18 @@ public interface IBattleshipModel {
 	public boolean isPlayerTwoTurn();
 	
 	/**
-	 * Allows view of player 1's board
+	 * Allows view of defensive boards
+	 * @param player true for player 1, false for player 2
 	 * @return an array of Strings representing player 2's attack board
 	 */
-	public ITile[][] getBoardStatePlayerOne();
+	public DefenseTileStatus[][] getBoardStateDefenseBoard(boolean player);
 	
 	/**
-	 * Allows view of player 2's board
+	 * Allows view of the offensive boards
+	 * @param player true for player 1, false for player 2
 	 * @return an array of Strings representing player 2's board
 	 */
-	public ITile[][] getBoardStatePlayerTwo();
+	public OffensiveTileStatus[][] getBoardStateOffensiveBoard(boolean player);
 	
 	/**
 	 * Tests to see if game is over
@@ -150,21 +152,22 @@ public interface IShip {
 }
 
 
+enum DefenseTileStatus {
+	OCEAN,
+	SHIP_DESTOYER
+	SHIP_CRUISER
+	SHIP_BATTLESHIP
+	SHIP_CARRIER
+}
 
-//WHY DO YOU DO THE THINGS
-public interface ITile {
-	/**
-	 * 
-	 * @return true/false if this tile has been fired at
-	 */
-	public boolean hasBeenFiredAt();
-	
-	/**
-	 * 
-	 * @throws IllegalStateException if this Tile has already been fired at.
-	 * @return FireResult for what the result of the "firing" was. 
-	 */
-	public FireResult FireAt(); 
+enum OffensiveTileStatus{
+	UNKNOWN
+	MISS
+	HIT_SHIP
+	SUNK_DESTOYER
+	SUNK_CRUISER
+	SUNK_BATTLESHIP
+	SUNK_CARRIER
 }
 
 enum ShipType {
