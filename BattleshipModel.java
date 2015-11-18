@@ -110,12 +110,57 @@ public class BattleshipModel implements IBattleshipModel {
 		}
 	}
 
-	@Override
-	public boolean isValidShipPlacement(int col, char row, IShip ship,
-			boolean player) {
-		// TODO Auto-generated method stub
-		return false;
+/**
+ 	 * Method checks that placement of the given ship is valid by meeting the following conditions:
+ 	 * 1.	That the ship does not overlap with any ships by sharing cells
+ 	 * 2.	That all of the peices of a ship are on the board
+ 	 * 3.	That the ships do not overlap in an diagnoal fashion
+ 	 * 4.	That the allowed amount of that ship type have not been already placed by
+ 	 * that player.
+ 	 * 
+ 	 * @param ship the type of ship being placed, used to test validity of input
+ 	 * @player true for player 1, false for player 2
+ 	 * @throws IllegalStateException is not in setup mode
+ 	 * @returns true if placement is valid
+ 	 */
+	public boolean isValidShipPlacement(IShip ship, boolean player) 
+	{
+		//Check that allowed of that ship type have not already been placed.
+		ArrayList<IShip> sPointer = (player ? this.playerOneShips : this.playerTwoShips);
+		int shipCount = 0;
+		for(int i = 0; i < sPointer.size(); i++) {
+			if(sPointer.get(i).getShipType() == ship.getShipType()) {
+				shipCount++;
+			}
+		}
+		
+		int maxAllowed = ship.getShipType() == ShipType.DESTROYER ? 2 : 1;
+		if(shipCount >= maxAllowed) 
+		{
+			return false;
+		}
+		
+		for(String cell : ship.getConsumingCells())
+		{
+			int row = (((int)cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
+			int col = Integer.parseInt(cell.substring(1));
+			if(row < 0 || row > 10 || col < 0 || col > 10) 
+			{
+				//Check that all parts of the ship are on the board
+				return false;
+			} else if(getDefenseBoard(player)[row][col] != DefenseTileStatus.OCEAN) 
+			{
+				//Check that the ship does not take up the place of another ship
+				return false;
+			}
+			
+			//Check that the ship does not overlap in a diagnoal fashion
+			//STILL TO DO THIS
+
+		}    
+		return true;
 	}
+
 
 	@Override
 	public int attackLocation(int col, char row) {
