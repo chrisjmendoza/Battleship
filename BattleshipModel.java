@@ -79,10 +79,35 @@ public class BattleshipModel implements IBattleshipModel {
 		return ships.size() == 5;
 	}
 
-	@Override
-	public void placeShip(int col, char row, IShip ship, boolean player) {
-		// TODO Auto-generated method stub
-		
+	/**
+ 	 * Places Ship at the given location
+ 	 * @param ship the type of ship being placed, used to test validity of input
+ 	 * @param player true for player 1, false for player 2
+ 	 * @throws IllegalArgumentException if same arguments return false for isValidShipPlacement method
+ 	 * @throws IllegalStateException is not in setup mode
+ 	 */
+	public void placeShip(IShip ship, boolean player) 
+	{
+		if(isInSetupMode()) {
+			throw new IllegalStateException("Cannot be in Setup Mode");
+		} else if(isValidShipPlacement(ship, player)) {
+			throw new IllegalArgumentException("Not a valid ship placement");
+			
+		} else {
+			ShipType shipType = ship.getShipType();
+			DefenseTileStatus newTileType = 
+				ShipType.DESTROYER == shipType.DESTROYER ? DefenseTileStatus.SHIP_DESTOYER :
+				ShipType.CRUISER == shipType.CRUISER ? DefenseTileStatus.SHIP_CRUISER :
+				ShipType.BATTLESHIP == shipType.BATTLESHIP ? DefenseTileStatus.SHIP_BATTLESHIP :
+				DefenseTileStatus.SHIP_CARRIER;
+				
+			for(String cell : ship.getConsumingCells())
+			{
+				int row = (((int)cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
+				int col = Integer.parseInt(cell.substring(1));
+				getDefenseBoard(player)[row][col] = newTileType;
+			}      
+		}
 	}
 
 	@Override
