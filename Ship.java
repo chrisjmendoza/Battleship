@@ -8,7 +8,7 @@
  * @author Sai Chang
  */
 
-public class Ship {
+public class Ship implements IShip {
 
 int length;
 String type;
