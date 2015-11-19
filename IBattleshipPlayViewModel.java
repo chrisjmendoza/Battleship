@@ -10,7 +10,7 @@
   */
  public interface IBattleshipPlayViewModel {
     
-    public void printBoard(boolean player, Board b);
+    public void printBoard(boolean player, IBattleshipBoard b);
     
     /**
       * Asks for the shot, displays a message if this is a retry.
@@ -18,5 +18,5 @@
       */
     public void askForFireShot(boolean retry);
     
-    printGameOver(Board b);
+    public void printGameOver(IBattleshipBoard b);
  }
