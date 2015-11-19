@@ -113,8 +113,8 @@ public class BattleshipModel implements IBattleshipModel {
 /**
  	 * Method checks that placement of the given ship is valid by meeting the following conditions:
  	 * 1.	That the ship does not overlap with any ships by sharing cells
- 	 * 2.	That all of the peices of a ship are on the board
- 	 * 3.	That the ships do not overlap in an diagnoal fashion
+ 	 * 2.	That all of the pieces of a ship are on the board
+ 	 * 3.	That the ships do not overlap in an diagonal fashion
  	 * 4.	That the allowed amount of that ship type have not been already placed by
  	 * that player.
  	 * 
@@ -154,7 +154,7 @@ public class BattleshipModel implements IBattleshipModel {
 				return false;
 			}
 			
-			//Check that the ship does not overlap in a diagnoal fashion
+			//Check that the ship does not overlap in a diagonal fashion
 			//STILL TO DO THIS
 
 		}    
@@ -277,4 +277,3 @@ public class BattleshipModel implements IBattleshipModel {
 		this.isInPlayMode = false;
 	}
 }
-
