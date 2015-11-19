@@ -1,5 +1,5 @@
  /**
-  * The programatic interface for the Battleship Model class.
+  * The programmatic interface for the Battleship Model class.
   * This interface supports communication with both the view
   * and controller classes in the Battleship application.
   * 
@@ -53,8 +53,8 @@
  	/**
  	 * Method checks that placement of the given ship is valid by meeting the following conditions:
  	 * 1.	That the ship does not overlap with any ships by sharing cells
- 	 * 2.	That all of the peices of a ship are on the board
- 	 * 3.	That the ships do not overlap in an diagnoal fashion
+ 	 * 2.	That all of the pieces of a ship are on the board
+ 	 * 3.	That the ships do not overlap in an diagonal fashion
  	 * 4.	That the allowed amount of that ship type have not been already placed by
  	 * that player.
  	 * 
@@ -74,9 +74,9 @@
  	 * @param row row you wish to attack on the opposing players board
  	 * @throws IllegalStateException if game is not in Play Mode or if game is over
  	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
- 	 * @return returns an FireResult  enum representing Status of attack
+ 	 * @return returns an FireResult  representing Status of attack
  	 */
- 	public int attackLocation(int col, char row);
+ 	public FireResult attackLocation(int col, char row);
  	
  	/**
  	 * This method returns if the arguments result in a valid place to attack
@@ -124,58 +124,8 @@
  	public void reset();
  }
  
- /**
-  * A helper class storing a ships type, length, and damage level
-  */
-  class IShip {
 
-	 	 /** Get the type of the ship that this instance is.
-	 	 * @return ShipType get the Ship. 
-	 	 */
-	 	public ShipType getShipType(){
-	 		return null;
-	 	}
-	 	
-	 	/**
-	 	 * 
-	 	 * @return a list of cells the board is consuming with the letter (i.e. B7)
-	 	 */
-	 	public String[] getConsumingCells(){
-	 		return null;
-	 	}
- }
+
  
- /**
-  * Defense tile status calls
-  */
- enum DefenseTileStatus {
- 	OCEAN,
- 	SHIP_DESTOYER,
- 	SHIP_CRUISER,
- 	SHIP_BATTLESHIP,
- 	SHIP_CARRIER
- }
- 
- /**
-  * Offensive tile status calls
-  */
- enum OffensiveTileStatus{
- 	UNKNOWN,
- 	MISS,
- 	HIT_SHIP,
- 	SUNK_DESTOYER,
- 	SUNK_CRUISER,
- 	SUNK_BATTLESHIP,
- 	SUNK_CARRIER
- }
- 
- /**
-  * Lists the names of the ships
-  */
- enum ShipType {
- 	DESTROYER, 
- 	CRUISER, 
- 	BATTLESHIP, 
- 	AIRCRAFT_CARRIER	
-}
- 
+
+
