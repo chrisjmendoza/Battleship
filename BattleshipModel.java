@@ -96,9 +96,9 @@ public class BattleshipModel implements IBattleshipModel {
 		} else {
 			ShipType shipType = ship.getShipType();
 			DefenseTileStatus newTileType = 
-				ShipType.DESTROYER == shipType.DESTROYER ? DefenseTileStatus.SHIP_DESTOYER :
-				ShipType.CRUISER == shipType.CRUISER ? DefenseTileStatus.SHIP_CRUISER :
-				ShipType.BATTLESHIP == shipType.BATTLESHIP ? DefenseTileStatus.SHIP_BATTLESHIP :
+				ShipType.DESTROYER == shipType ? DefenseTileStatus.SHIP_DESTOYER :
+				ShipType.CRUISER == shipType ? DefenseTileStatus.SHIP_CRUISER :
+				ShipType.BATTLESHIP == shipType ? DefenseTileStatus.SHIP_BATTLESHIP :
 				DefenseTileStatus.SHIP_CARRIER;
 				
 			for(String cell : ship.getConsumingCells())
@@ -162,10 +162,18 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 
-	@Override
-	public int attackLocation(int col, char row) {
-		// TODO Auto-generated method stub
-		return 0;
+ 	/**
+ 	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
+ 	 * 
+ 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
+ 	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
+ 	 * @return returns an FireResult  enum representing Status of attack
+ 	 */
+	public FireResult attackLocation(int col, char row) {
+		if(this.isGameOver() || !this.isInPlayMode()) {
+			throw new IllegalStateException("Game is over or not in play mode.");
+		}	
+		return FireResult.HIT;
 	}
 
 	@Override
