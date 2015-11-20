@@ -139,7 +139,8 @@ public class BattleshipModel implements IBattleshipModel {
 		{
 			return false;
 		}
-		
+		int prevRow = -1;
+		int prevCol = -1;
 		for(String cell : ship.getConsumingCells())
 		{
 			int row = (((int)cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
@@ -154,9 +155,25 @@ public class BattleshipModel implements IBattleshipModel {
 				return false;
 			}
 			
-			//Check that the ship does not overlap in a diagonal fashion
-			//STILL TO DO THIS
-
+			//Assuming 0,0 is the top left and 9,9 the bottom right
+			//We should probably tidy these up
+			
+			//checks if ship is placed diagonally bottom on the left, top on the right,
+			//then to see if ship placement is valid
+			if(prevRow < row && prevCol < col) {
+				if((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN) && 
+					(getDefenseBoard(player)[row][col + 1] != DefenseTileStatus.OCEAN))
+					return false;
+			}
+			//checks if ship is placed diagonally top on the left, bottom on the right,
+			//then to see if ship placement is valid
+			if(prevRow < row && prevCol > col) {
+				if((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN) && 
+					(getDefenseBoard(player)[row][col - 1] != DefenseTileStatus.OCEAN))
+					return false;
+			}
+			prevRow = row;
+			prevCol = col;
 		}    
 		return true;
 	}
@@ -178,8 +195,36 @@ public class BattleshipModel implements IBattleshipModel {
 
 	@Override
 	public boolean isValidAttackLocation(int col, char row) {
-		// TODO Auto-generated method stub
-		return false;
+		int y;
+		int player;
+		if(row == 'A' || 'a')
+			y = 0;
+		if(row == 'B' || 'b')
+			y = 1;
+		if(row == 'C' || 'c')
+			y = 2;
+		if(row == 'D' || 'd')
+			y = 3;
+		if(row == 'E' || 'e')
+			y = 4;
+		if(row == 'F' || 'f')
+			y = 5;
+		if(row == 'G' || 'g')
+			y = 6;
+		if(row == 'H' || 'h')
+			y = 7;
+		if(row == 'I' || 'i')
+			y = 8;
+		if(row == 'J' || 'j')
+			y = 9;
+		if(currentPlayersTurn)
+			player = 1;
+		else
+			player = 0;
+		if(offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN)
+			return true;
+		else
+			return false;
 	}
 
  	/**
