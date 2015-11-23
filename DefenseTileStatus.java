@@ -10,5 +10,5 @@ public enum DefenseTileStatus
  	SHIP_CRUISER,
  	SHIP_BATTLESHIP,
  	SHIP_CARRIER
- }
+}
  
