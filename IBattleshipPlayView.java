@@ -8,7 +8,7 @@
   * @author Peter Kim
   * @author Sai Chang
   */
- public interface IBattleshipPlayViewModel {
+ public interface IBattleshipPlayView {
     
     public void printBoard(boolean player, IBattleshipBoard b);
     
