@@ -199,24 +199,28 @@ public class BattleshipModel implements IBattleshipModel {
 		int player;
 		if(row == 'A' || 'a')
 			y = 0;
-		if(row == 'B' || 'b')
+		else if(row == 'B' || 'b')
 			y = 1;
-		if(row == 'C' || 'c')
+		else if(row == 'C' || 'c')
 			y = 2;
-		if(row == 'D' || 'd')
+		else if(row == 'D' || 'd')
 			y = 3;
-		if(row == 'E' || 'e')
+		else if(row == 'E' || 'e')
 			y = 4;
-		if(row == 'F' || 'f')
+		else if(row == 'F' || 'f')
 			y = 5;
-		if(row == 'G' || 'g')
+		else if(row == 'G' || 'g')
 			y = 6;
-		if(row == 'H' || 'h')
+		else if(row == 'H' || 'h')
 			y = 7;
-		if(row == 'I' || 'i')
+		else if(row == 'I' || 'i')
 			y = 8;
-		if(row == 'J' || 'j')
+		else if(row == 'J' || 'j')
 			y = 9;
+		else
+			return false;
+		if(col < 1 || col > 10)
+			return false;
 		if(currentPlayersTurn)
 			player = 1;
 		else
