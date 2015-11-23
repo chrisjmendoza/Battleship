@@ -12,11 +12,6 @@ import java.util.Scanner;
 
 /**
  * The Battleship's view and controller during its play phase
- * 
- * @author Casey Riggin
- * @author Christopher Mendoza
- * @author Peter Kim
- * @author Sai Chang
  */
 public class BattleshipPlayView {
 	private BattleshipModel model;
