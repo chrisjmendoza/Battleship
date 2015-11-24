@@ -1,4 +1,4 @@
-public interface IBattleShipSetupViewInterface {
+public interface IBattleshipSetupViewInterface {
 
     /**
      * Consults with the model to find out which direction the ship is facing and at what angle.
