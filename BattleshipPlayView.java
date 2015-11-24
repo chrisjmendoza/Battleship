@@ -109,9 +109,8 @@ public class BattleshipPlayView {
     
 	/**
 	 * Asks for the shot, displays a message if this is a retry.
-	 * @param retry True if this attempt is a retry attempt.
 	*/
-	public void askForFireShot(boolean retry) {
+	public void askForFireShot() {
 		boolean attack = true;
 		char row;
 		int column;
