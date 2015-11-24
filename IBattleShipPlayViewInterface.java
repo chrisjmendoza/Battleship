@@ -17,7 +17,7 @@ public interface IBattleShipPlayViewInterface{
     public void printBoard(boolean player);
 
     /**
-     * Promps the player for an attack location. If that location is out of bounds then player is promped to
+     * Prompts the player for an attack location. If that location is out of bounds then player is promped to
      * attack again. This method consults with model and controller to implement the attack.
      * 
      */
