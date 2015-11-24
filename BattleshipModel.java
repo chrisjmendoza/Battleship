@@ -296,6 +296,22 @@ public class BattleshipModel implements IBattleshipModel {
 		//return true if you got here
 		return true;
 	}
+	
+	/**
+	 * Returns winner, throws an InvalidStateException if there is not one
+	 * @return returns true if player 1 has won and false if player 2 has won
+	 */
+	public boolean getWinner() {
+		;
+	}
+	
+	/**
+	 * Returns current player
+	 * @return true if player 1 is playing and false if player 2
+	 */
+	public boolean getCurrentPlayer {
+		;
+	}
 
 	/**
 	 * Helper method is going to get the cells that each ship
