@@ -58,15 +58,16 @@ public class Ship implements IShip {
 		return direction;
 	}
 
-	@Override
+	/** 
+	 * 
+	 */
 	public ShipType getShipType() {
-		// TODO Auto-generated method stub
 		return type;
 	}
 
-	@Override
+
 	public String[] getConsumingCells() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 }
