@@ -58,7 +58,6 @@ public class BattleshipModel implements IBattleshipModel {
  	* @throws IllegalStateException if not all ships have been placed for both players or if game is already in play mode
  	*/
 	public void moveToPlay(boolean player) {
-		// TODO Auto-generated method stub
 		if(!areAllShipsPlaced(true) || !areAllShipsPlaced(false)) {
 			throw new IllegalStateException("Not all ships have been placed yet!");
 		} else {
@@ -96,7 +95,7 @@ public class BattleshipModel implements IBattleshipModel {
 		} else {
 			ShipType shipType = ship.getShipType();
 			DefenseTileStatus newTileType = 
-				ShipType.DESTROYER == shipType ? DefenseTileStatus.SHIP_DESTOYER :
+				ShipType.DESTROYER == shipType ? DefenseTileStatus.SHIP_DESTROYER :
 				ShipType.CRUISER == shipType ? DefenseTileStatus.SHIP_CRUISER :
 				ShipType.BATTLESHIP == shipType ? DefenseTileStatus.SHIP_BATTLESHIP :
 				DefenseTileStatus.SHIP_CARRIER;
@@ -193,29 +192,28 @@ public class BattleshipModel implements IBattleshipModel {
 		return FireResult.HIT;
 	}
 
-	@Override
 	public boolean isValidAttackLocation(int col, char row) {
 		int y;
 		int player;
-		if(row == 'A' || 'a')
+		if(row == 'A' || row == 'a')
 			y = 0;
-		else if(row == 'B' || 'b')
+		else if(row == 'B' || row == 'b')
 			y = 1;
-		else if(row == 'C' || 'c')
+		else if(row == 'C' || row == 'c')
 			y = 2;
-		else if(row == 'D' || 'd')
+		else if(row == 'D' || row == 'd')
 			y = 3;
-		else if(row == 'E' || 'e')
+		else if(row == 'E' || row == 'e')
 			y = 4;
-		else if(row == 'F' || 'f')
+		else if(row == 'F' || row == 'f')
 			y = 5;
-		else if(row == 'G' || 'g')
+		else if(row == 'G' || row == 'g')
 			y = 6;
-		else if(row == 'H' || 'h')
+		else if(row == 'H' || row == 'h')
 			y = 7;
-		else if(row == 'I' || 'i')
+		else if(row == 'I' || row =='i')
 			y = 8;
-		else if(row == 'J' || 'j')
+		else if(row == 'J' || row == 'j')
 			y = 9;
 		else
 			return false;
