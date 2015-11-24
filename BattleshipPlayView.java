@@ -22,7 +22,7 @@ public class BattleshipPlayView {
 	 * Constructor for the Battleship's play view
 	 * @param model the model that the view and controller interact with
 	 */
-	public BattleshipView(BattleshipModel model) {
+	public BattleshipPlayView(BattleshipModel model) {
 		this.model = model;
 		input = new Scanner(System.in); // scanner wow!!
 	}
@@ -41,7 +41,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile;
+				String tile = "";
 				switch (offense[j][i]) {
 		        	case UNKNOWN:
 		        		tile = " ";
@@ -77,7 +77,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile;
+				String tile = "";
 				switch (defense[j][i]) {
 		        	case OCEAN:
 		        		tile = " ";
