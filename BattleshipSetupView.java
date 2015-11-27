@@ -17,11 +17,14 @@ import java.util.Scanner;
 */
 public class BattleshipSetupView {
 			
+	private BattleshipModel model;
 	private Scanner input;
 	
-	public BattleshipSetupView() {
+	public BattleshipSetupView(BattleshipModel model) {
 		input = new Scanner(System.in);
 	}
+	
+	
 	
 	/**
 	 * Consults with the model to find out which direction the ship is facing and at what angle.
@@ -85,12 +88,13 @@ public class BattleshipSetupView {
 	 */
 	public void printBoard(boolean player) {
 		System.out.println("\n\nCurrent board\n");
+		DefenseTileStatus[][] defense = model.getDefenseBoard(player);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile;
+				String tile = "";
 				switch (defense[j][i]) {
 		        	case OCEAN:
 		        		tile = " ";
