@@ -12,17 +12,21 @@ import java.util.Scanner;
 
 /**
  * The Battleship's view and controller during its play phase
+ * 
+ * @author Casey Riggin
+ * @author Christopher Mendoza
+ * @author Peter Kim
+ * @author Sai Chang
  */
 public class BattleshipPlayView {
 	private BattleshipModel model;
-	boolean currentPlayer;
 	Scanner input;
 	
 	/**
 	 * Constructor for the Battleship's play view
 	 * @param model the model that the view and controller interact with
 	 */
-	public BattleshipPlayView(BattleshipModel model) {
+	public BattleshipView(BattleshipModel model) {
 		this.model = model;
 		input = new Scanner(System.in); // scanner wow!!
 	}
@@ -41,7 +45,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile = "";
+				String tile;
 				switch (offense[j][i]) {
 		        	case UNKNOWN:
 		        		tile = " ";
@@ -77,7 +81,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile = "";
+				String tile;
 				switch (defense[j][i]) {
 		        	case OCEAN:
 		        		tile = " ";
@@ -109,18 +113,17 @@ public class BattleshipPlayView {
     
 	/**
 	 * Asks for the shot, displays a message if this is a retry.
+	 * @param retry True if this attempt is a retry attempt.
 	*/
-	public void askForFireShot() {
+	public void askForFireShot(boolean retry) {
 		boolean attack = true;
 		char row;
 		int column;
 		int player;
-		currentPlayer = model.isPlayerTurn();
-		if(currentPlayer) {
+		if(model.isPlayerTurn())
 			player = 1;
-		} else {
+		else
 			player = 2;
-		}
 		while(attack) {
 			System.out.println("Admiral Player " + player + ", where shall we attack: ");
 			String place = input.nextLine();
@@ -143,11 +146,7 @@ public class BattleshipPlayView {
 	public void printGameOver() {
 		if(model.isGameOver()) {
 			int player;
-			if(currentPlayer) {
-				player = 1;
-			} else {
-				player = 2;
-			}
+			player = model.getWinner();
 			System.out.println("Game over, Admiral Player " + player + " has achieved victory!");
 		} else {
 			throw new IllegalStateException(); 
