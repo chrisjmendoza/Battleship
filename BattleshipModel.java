@@ -100,9 +100,9 @@ public class BattleshipModel implements IBattleshipModel {
 	 *             is not in setup mode
 	 */
 	public void placeShip(IShip ship, boolean player) {
-		if (isInSetupMode()) {
-			throw new IllegalStateException("Cannot be in Setup Mode");
-		} else if (isValidShipPlacement(ship, player)) {
+		if (!isInSetupMode()) {
+			throw new IllegalStateException("Cannot be in Play Mode");
+		} else if (!isValidShipPlacement(ship, player)) {
 			throw new IllegalArgumentException("Not a valid ship placement");
 
 		} else {
@@ -113,8 +113,8 @@ public class BattleshipModel implements IBattleshipModel {
 									: DefenseTileStatus.SHIP_CARRIER;
 
 			for (String cell : ship.getConsumingCells()) {
-				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
-				int col = Integer.parseInt(cell.substring(1));
+				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
+				int col = Integer.parseInt(cell.substring(1)) - 1;
 				getDefenseBoard(player)[row][col] = newTileType;
 			}
 		}
@@ -152,7 +152,7 @@ public class BattleshipModel implements IBattleshipModel {
 		int prevRow = -1;
 		int prevCol = -1;
 		for (String cell : ship.getConsumingCells()) {
-			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
+			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 			int col = Integer.parseInt(cell.substring(1));
 			if (row < 0 || row > 10 || col < 0 || col > 10) {
 				// Check that all parts of the ship are on the board
@@ -169,19 +169,23 @@ public class BattleshipModel implements IBattleshipModel {
 			// checks if ship is placed diagonally bottom on the left, top on
 			// the right,
 			// then to see if ship placement is valid
+			/*
 			if (prevRow < row && prevCol < col) {
 				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
 						&& (getDefenseBoard(player)[row][col + 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
+			*/
 			// checks if ship is placed diagonally top on the left, bottom on
 			// the right,
 			// then to see if ship placement is valid
+			/*
 			if (prevRow < row && prevCol > col) {
 				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
 						&& (getDefenseBoard(player)[row][col - 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
+			*/
 			prevRow = row;
 			prevCol = col;
 		}
@@ -327,7 +331,7 @@ public class BattleshipModel implements IBattleshipModel {
 		int i = 0;
 		for (IShip s : (player ? this.playerOneShips : this.playerTwoShips)) {
 			for (String cell : s.getConsumingCells()) {
-				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a' + 1);
+				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 				int col = Integer.parseInt(cell.substring(1));
 				shipCells[i] = new int[] { row, col };
 				i++;
@@ -355,8 +359,16 @@ public class BattleshipModel implements IBattleshipModel {
 	 * Sets board state so that game may begin anew
 	 */
 	public void reset() {
+		int[][][] test = new int[2][10][10];
 		this.offenseBoards = new OffensiveTileStatus[2][10][10];
 		this.defenseBoards = new DefenseTileStatus[2][10][10];
+		for(int i = 0; i < 2; i++) {
+			for(int ii = 0; ii < 10; ii++){
+				for(int iii = 0; iii < 10; iii++){
+					this.defenseBoards[i][ii][iii] = DefenseTileStatus.OCEAN;
+				}
+			}
+		}
 		this.playerOneShips = new ArrayList<IShip>();
 		this.playerTwoShips = new ArrayList<IShip>();
 		this.isInPlayMode = false;

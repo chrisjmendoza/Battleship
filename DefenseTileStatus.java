@@ -4,8 +4,6 @@
 public enum DefenseTileStatus 
 {
     OCEAN,
-    MISS,
-    HIT,
  	SHIP_DESTROYER,
  	SHIP_CRUISER,
  	SHIP_BATTLESHIP,

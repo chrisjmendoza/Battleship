@@ -43,10 +43,14 @@ public class BattleshipKicker {
 					}
 					String origin = setup.getPosition(toPlace[shipNum]);
 					Direction direction = setup.getDirection(toPlace[shipNum]);
-					s = new Ship(5, toPlace[shipNum], origin, direction);
+					s = new Ship(toPlace[shipNum], origin, direction);
 				} while (!s.isValidShipValues()
-						|| model.isValidShipPlacement(s, person == 1 ? true
+						|| !model.isValidShipPlacement(s, person == 1 ? true
 								: false));
+				
+				//Place the ship and 
+				model.placeShip(s, person == 1);
+				setup.printBoard(person == 1);
 			}
 		}
 	}

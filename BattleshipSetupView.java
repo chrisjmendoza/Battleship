@@ -22,6 +22,7 @@ public class BattleshipSetupView {
 	
 	public BattleshipSetupView(BattleshipModel model) {
 		input = new Scanner(System.in);
+		this.model = model;
 	}
 	
 	
@@ -92,20 +93,12 @@ public class BattleshipSetupView {
 		System.out.println("\n\nCurrent board\n");
 		DefenseTileStatus[][] defense = model.getDefenseBoard(player);
 		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
-				System.out.println("+---+");
-			}
+			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
 			for(int j = 0; j < 10; j++) {
 				String tile = "";
 				switch (defense[j][i]) {
 		        	case OCEAN:
 		        		tile = " ";
-		                break;
-		            case MISS:
-		            	tile = "O";
-		                break;        
-		            case HIT:
-		            	tile = "X";
 		                break;
 		            case SHIP_DESTROYER:
 		            	tile = "D";
@@ -120,9 +113,15 @@ public class BattleshipSetupView {
 		            	tile = "C";
 		                break;
 		        }
+				if(j==0) {
+					System.out.print((char)('A' + i));
+					System.out.print(" ");
+				}
 				System.out.print("| " + tile + " ");
 			}
 			System.out.println("|");
 		}
+		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
+		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 	}
 }

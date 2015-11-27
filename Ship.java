@@ -16,25 +16,23 @@ public class Ship implements IShip {
 	int length;
 	ShipType type;
 	Direction direction;
-	String origin; 
+	String origin;
 
 	/**
 	 * Ship constructor
 	 * 
-	 * @param length
-	 *            The length of the ship
 	 * @param type
 	 *            The type of ship (eg destroyer, etc)
 	 * @param origin
 	 *            The starting grid point of the ship
 	 * @param direction
-	 *            The direction the ship is facing from the origin 
+	 *            The direction the ship is facing from the origin
 	 */
-	public Ship(int length, ShipType type, String origin, Direction dir) {
+	public Ship(ShipType type, String origin, Direction dir) {
 		this.length = length;
 		this.type = type;
 		this.direction = dir;
-		this.origin = (origin == null ?  "" : origin).toUpperCase().trim();
+		this.origin = (origin == null ? "" : origin).toUpperCase().trim();
 	}
 
 	/**
@@ -65,14 +63,37 @@ public class Ship implements IShip {
 		return this.type;
 	}
 
-
 	public String[] getConsumingCells() 
 	{
+		int length = 0;
+		if(this.type == ShipType.AIRCRAFT_CARRIER){
+			this.length = 5;
+		} else if(this.type == ShipType.BATTLESHIP)
+		{
+			this.length = 4;
+		}
+		else if(this.type == ShipType.CRUISER) 
+		{
+			this.length = 3;
+		} 
+		else if(this.type == ShipType.DESTROYER)
+		{
+			this.length = 2;
+		}
 		
+		String[] consumedCells = new String[length];
+		int row = (((int) getOrigin().toUpperCase().toCharArray()[0]) - 'A');
+		int col = Integer.parseInt(getOrigin().substring(1));
+		for(int i = 0; i < length; i++){
+			if(i != 0) {
+				
+				
+			}
+			consumedCells[i] = consumedCells + " " + col;
+		}
 	}
-	
-	public boolean isValidShipValues() 
-	{
+
+	public boolean isValidShipValues() {
 		return Pattern.matches("^[A-J]{1}(10|[1-9]{1})$", this.getOrigin());
 	}
 }
