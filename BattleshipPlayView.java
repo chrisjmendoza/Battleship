@@ -26,7 +26,7 @@ public class BattleshipPlayView {
 	 * Constructor for the Battleship's play view
 	 * @param model the model that the view and controller interact with
 	 */
-	public BattleshipView(BattleshipModel model) {
+	public BattleshipPlayView(BattleshipModel model) {
 		this.model = model;
 		input = new Scanner(System.in); // scanner wow!!
 	}
@@ -45,7 +45,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile;
+				String tile = " ";
 				switch (offense[j][i]) {
 		        	case UNKNOWN:
 		        		tile = " ";
@@ -81,7 +81,7 @@ public class BattleshipPlayView {
 				System.out.println("+---+");
 			}
 			for(int j = 0; j < 10; j++) {
-				String tile;
+				String tile = "";
 				switch (defense[j][i]) {
 		        	case OCEAN:
 		        		tile = " ";
@@ -146,7 +146,7 @@ public class BattleshipPlayView {
 	public void printGameOver() {
 		if(model.isGameOver()) {
 			int player;
-			player = model.getWinner();
+			player = model.getWinner() ? 1 : 2;
 			System.out.println("Game over, Admiral Player " + player + " has achieved victory!");
 		} else {
 			throw new IllegalStateException(); 
