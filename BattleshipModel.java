@@ -193,19 +193,39 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
-	 * Sends an attack to given position. If the attack returns a miss, switch
-	 * the active turn
-	 * 
-	 * @throws IllegalStateException
-	 *             if game is not in Play Mode or if game is over
-	 * @throws IllegalArgumentException
-	 *             if the same arguments would cause isValidAttackLocation to
-	 *             return false
-	 * @return returns an FireResult enum representing Status of attack
-	 */
+ 	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
+ 	 * 
+ 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
+ 	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
+ 	 * @return returns an FireResult  enum representing Status of attack
+ 	 */
 	public FireResult attackLocation(int col, char row) {
-		if (this.isGameOver() || !this.isInPlayMode()) {
+		if(this.isGameOver() || !this.isInPlayMode()) {
 			throw new IllegalStateException("Game is over or not in play mode.");
+		}	
+		// Check the position for validity and throw an exception if invalid
+		if(!isValidAttackLocation(col, row)) {
+			throw new IndexOutOfBoundsException("That is not a valid attack position!");
+		} else {
+			// check the given space for a ship and return if the attack was:
+			// EMPTY, HIT, SUNK
+			int player;
+			// if current player is player 1, set the player variable to player 2 to pull up their board
+			// and vice versa
+			if(isPlayerTurn()) {
+				player = 1;
+			} else {
+				player = 0;
+			}
+			// check the status of the attacked tile. If it is an OCEAN tile, report a miss
+			if(getDefenseBoard(!isPlayerTurn())[row][col] == DefenseTileStatus.OCEAN) {
+				return FireResult.MISS;
+				
+			} else { // this is where it gets hard...
+				
+				// check if the ship that was hit is going be sunk from this hit
+				
+			}
 		}
 		return FireResult.HIT;
 	}
