@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 
 public class Ship implements IShip {
 
-	int length;
 	ShipType type;
 	Direction direction;
 	String origin;
@@ -29,7 +28,6 @@ public class Ship implements IShip {
 	 *            The direction the ship is facing from the origin
 	 */
 	public Ship(ShipType type, String origin, Direction dir) {
-		this.length = length;
 		this.type = type;
 		this.direction = dir;
 		this.origin = (origin == null ? "" : origin).toUpperCase().trim();
@@ -40,13 +38,6 @@ public class Ship implements IShip {
 	 */
 	public String getOrigin() {
 		return this.origin;
-	}
-
-	/**
-	 * Getter for ship length
-	 */
-	public int getLength() {
-		return this.length;
 	}
 
 	/**
@@ -66,13 +57,13 @@ public class Ship implements IShip {
 	public String[] getConsumingCells() {
 		int length = 0;
 		if (this.type == ShipType.AIRCRAFT_CARRIER) {
-			this.length = 5;
+			length = 5;
 		} else if (this.type == ShipType.BATTLESHIP) {
-			this.length = 4;
+			length = 4;
 		} else if (this.type == ShipType.CRUISER) {
-			this.length = 3;
+			length = 3;
 		} else if (this.type == ShipType.DESTROYER) {
-			this.length = 2;
+			length = 2;
 		}
 
 		String[] consumedCells = new String[length];
@@ -84,26 +75,25 @@ public class Ship implements IShip {
 					row = row - 1;
 				} else if (direction == Direction.NW) {
 					row = row - 1;
-					col = col + 1;
+					col = col - 1;
 				} else if (direction == Direction.W) {
-					col = col + 1;
+					col = col - 1;
 				} else if (direction == Direction.SW) {
-					col = col + 1;
+					col = col - 1;
 					row = row + 1;
 				} else if (direction == Direction.S) {
 					row = row + 1;
 				} else if (direction == Direction.SE) {
 					row = row + 1;
-					col = col - 1;
+					col = col + 1;
 				} else if (direction == Direction.E) {
-					col = col - 1;
+					col = col + 1;
 				} else if (direction == Direction.NE) {
-					col = col - 1;
+					col = col + 1;
 					row = row - 1;
 				}
-
 			}
-			consumedCells[i] = row + " " + col;
+			consumedCells[i] = "" + (char)((char)'A' + row) + Integer.toString(col);
 		}
 		return consumedCells;
 	}

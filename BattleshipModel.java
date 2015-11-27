@@ -154,7 +154,7 @@ public class BattleshipModel implements IBattleshipModel {
 		for (String cell : ship.getConsumingCells()) {
 			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 			int col = Integer.parseInt(cell.substring(1));
-			if (row < 0 || row > 10 || col < 0 || col > 10) {
+			if (row < 0 || row > 9 || col < 0 || col > 9) {
 				// Check that all parts of the ship are on the board
 				return false;
 			} else if (getDefenseBoard(player)[row][col] != DefenseTileStatus.OCEAN) {
@@ -381,6 +381,13 @@ public class BattleshipModel implements IBattleshipModel {
 	public void reset() {
 		int[][][] test = new int[2][10][10];
 		this.offenseBoards = new OffensiveTileStatus[2][10][10];
+		for(int i = 0; i < 2; i++) {
+			for(int ii = 0; ii < 10; ii++){
+				for(int iii = 0; iii < 10; iii++){
+					this.offenseBoards[i][ii][iii] = OffensiveTileStatus.UNKNOWN;
+				}
+			}
+		}
 		this.defenseBoards = new DefenseTileStatus[2][10][10];
 		for(int i = 0; i < 2; i++) {
 			for(int ii = 0; ii < 10; ii++){
