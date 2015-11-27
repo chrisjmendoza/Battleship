@@ -197,7 +197,7 @@ public class BattleshipModel implements IBattleshipModel {
  	 * 
  	 * @throws IllegalStateException if game is not in Play Mode or if game is over
  	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
- 	 * @return returns an FireResult  enum representing Status of attack
+ 	 * @return returns an FireResult enum representing Status of attack
  	 */
 	public FireResult attackLocation(int col, char row) {
 		if(this.isGameOver() || !this.isInPlayMode()) {
@@ -224,7 +224,15 @@ public class BattleshipModel implements IBattleshipModel {
 			} else { // this is where it gets hard...
 				
 				// check if the ship that was hit is going be sunk from this hit
-				
+				for(int i = 0; i < playerOneShips.size(); i++) {
+					String[] attkLoc = new String[2];
+					attkLoc[0] = Integer.toString(col);
+					attkLoc[1] = Character.toString(row);
+					String[] loc = playerOneShips.get(i).getConsumingCells();
+					if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
+						
+					}
+				}
 			}
 		}
 		return FireResult.HIT;
