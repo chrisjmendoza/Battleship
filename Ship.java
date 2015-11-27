@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 /**
  * The abstract ship class that will be used to define each ship After writing
  * some stuff for this, since each method doesn't need to be different for each
@@ -13,9 +15,8 @@ public class Ship implements IShip {
 
 	int length;
 	ShipType type;
-	String direction;
-	String origin; // We need to store the origin somewhere in here, how do we
-					// want to accomplish that?
+	Direction direction;
+	String origin; 
 
 	/**
 	 * Ship constructor
@@ -27,47 +28,51 @@ public class Ship implements IShip {
 	 * @param origin
 	 *            The starting grid point of the ship
 	 * @param direction
-	 *            The direction the ship is facing from the origin (N, NE, E,
-	 *            SE)
+	 *            The direction the ship is facing from the origin 
 	 */
-	public Ship(int length, ShipType type, String origin, String direction) {
+	public Ship(int length, ShipType type, String origin, Direction dir) {
 		this.length = length;
 		this.type = type;
-		this.direction = direction;
-		this.origin = origin;
+		this.direction = dir;
+		this.origin = (origin == null ?  "" : origin).toUpperCase().trim();
 	}
 
 	/**
 	 * Getter for ship origin
 	 */
 	public String getOrigin() {
-		return origin;
+		return this.origin;
 	}
 
 	/**
 	 * Getter for ship length
 	 */
 	public int getLength() {
-		return length;
+		return this.length;
 	}
 
 	/**
 	 * Getter for ship's direction
 	 */
-	public String getDirection() {
-		return direction;
+	public Direction getDirection() {
+		return this.direction;
 	}
 
 	/** 
 	 * 
 	 */
 	public ShipType getShipType() {
-		return type;
+		return this.type;
 	}
 
 
-	public String[] getConsumingCells() {
+	public String[] getConsumingCells() 
+	{
 		
-		return null;
+	}
+	
+	public boolean isValidShipValues() 
+	{
+		return Pattern.matches("^[A-J]{1}(10|[1-9]{1})$", this.getOrigin());
 	}
 }

@@ -13,4 +13,11 @@ public interface IShip {
 	 * @return a list of cells the board is consuming with the letter (i.e. B7)
 	 */
 	public String[] getConsumingCells();
+	
+	
+	/**
+	 * Would this ship even float?
+	 * @return Makes sure that the values given for the ship are valid.
+	 */
+	public boolean isValidShipValues();
 }

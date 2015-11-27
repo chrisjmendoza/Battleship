@@ -26,6 +26,7 @@ public class BattleshipSetupView {
 	
 	
 	
+	
 	/**
 	 * Consults with the model to find out which direction the ship is facing and at what angle.
 	 * @param shipName Name of the ship being set.
@@ -33,13 +34,14 @@ public class BattleshipSetupView {
 	 * @return Returns a Direction enum.
 	 * 
 	*/
-	public Direction getDirection(String shipName, int length) {
+	public Direction getDirection(ShipType ship) {
 		boolean validInput = false;
 		Direction direction = null;
 		while(!validInput) {
 			String in;
-			System.out.print("What direction shall we place our " + shipName + "? (length " + length + " N, NE, E, SE, S, SW, W, NW): ");
+			System.out.print("What direction shall we place our " + ship.toString() + "? (Example: N, NE, E, SE, S, SW, W, NW) ");
 			in = input.nextLine();
+			in = (in == null ? "" : in).toUpperCase().trim();
 			if(in.equals("N")) {
 				direction = Direction.N;
 				validInput = true;
@@ -77,8 +79,8 @@ public class BattleshipSetupView {
 	 * @param length Length of the ship being set.
 	 * @return Returns a String example: "B9" translating to the position of the ship.
 	 */
-	public String getPosition(String shipName, int length) {
-		System.out.print("Where shall we place " + shipName + "? (length " + length + ": ");
+	public String getPosition(ShipType ship) {
+		System.out.print("Where shall we place " + ship.toString() + "? (Ex: A1): ");
 		return input.nextLine();
 	}
 
@@ -123,9 +125,4 @@ public class BattleshipSetupView {
 			System.out.println("|");
 		}
 	}
-}
-
-//Enum representing ship direction
-enum Direction {
-	N, NE, E, SE, S, SW, W, NW;
 }
