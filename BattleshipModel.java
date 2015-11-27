@@ -320,6 +320,15 @@ public class BattleshipModel implements IBattleshipModel {
 		return shipCells;
 	}
 	
+	/**
+	 * Allows communication of winner to the view
+	 * throws an IllegalStateException if there is no winner
+	 * @return returns winner of Battleship as a boolean, true for player 1 false for 2
+	 */
+	public boolean getWinner() {
+		;
+	}
+	
  	/**
  	 * Sets board state so that game may begin anew
  	 */
