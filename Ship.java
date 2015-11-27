@@ -63,34 +63,49 @@ public class Ship implements IShip {
 		return this.type;
 	}
 
-	public String[] getConsumingCells() 
-	{
+	public String[] getConsumingCells() {
 		int length = 0;
-		if(this.type == ShipType.AIRCRAFT_CARRIER){
+		if (this.type == ShipType.AIRCRAFT_CARRIER) {
 			this.length = 5;
-		} else if(this.type == ShipType.BATTLESHIP)
-		{
+		} else if (this.type == ShipType.BATTLESHIP) {
 			this.length = 4;
-		}
-		else if(this.type == ShipType.CRUISER) 
-		{
+		} else if (this.type == ShipType.CRUISER) {
 			this.length = 3;
-		} 
-		else if(this.type == ShipType.DESTROYER)
-		{
+		} else if (this.type == ShipType.DESTROYER) {
 			this.length = 2;
 		}
-		
+
 		String[] consumedCells = new String[length];
 		int row = (((int) getOrigin().toUpperCase().toCharArray()[0]) - 'A');
 		int col = Integer.parseInt(getOrigin().substring(1));
-		for(int i = 0; i < length; i++){
-			if(i != 0) {
-				
-				
+		for (int i = 0; i < length; i++) {
+			if (i != 0) {
+				if (direction == Direction.N) {
+					row = row - 1;
+				} else if (direction == Direction.NW) {
+					row = row - 1;
+					col = col + 1;
+				} else if (direction == Direction.W) {
+					col = col + 1;
+				} else if (direction == Direction.SW) {
+					col = col + 1;
+					row = row + 1;
+				} else if (direction == Direction.S) {
+					row = row + 1;
+				} else if (direction == Direction.SE) {
+					row = row + 1;
+					col = col - 1;
+				} else if (direction == Direction.E) {
+					col = col - 1;
+				} else if (direction == Direction.NE) {
+					col = col - 1;
+					row = row - 1;
+				}
+
 			}
-			consumedCells[i] = consumedCells + " " + col;
+			consumedCells[i] = row + " " + col;
 		}
+		return consumedCells;
 	}
 
 	public boolean isValidShipValues() {
