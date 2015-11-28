@@ -47,9 +47,7 @@ public class Ship implements IShip {
 		return this.direction;
 	}
 
-	/** 
-	 * 
-	 */
+	
 	public ShipType getShipType() {
 		return this.type;
 	}

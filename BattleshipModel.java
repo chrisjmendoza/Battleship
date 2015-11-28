@@ -61,8 +61,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 */
 	public void moveToPlay(boolean player) {
 		if (!areAllShipsPlaced(true) || !areAllShipsPlaced(false)) {
-			throw new IllegalStateException(
-					"Not all ships have been placed yet!");
+			throw new IllegalStateException("Not all ships have been placed yet!");
 		} else {
 			this.isInPlayMode = true;
 			this.currentPlayersTurn = player;
@@ -81,8 +80,7 @@ public class BattleshipModel implements IBattleshipModel {
 		// since only valid ships can be placed, you can
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
-		ArrayList<IShip> ships = player ? this.playerOneShips
-				: this.playerTwoShips;
+		ArrayList<IShip> ships = player ? this.playerOneShips : this.playerTwoShips;
 		return ships.size() == 5;
 	}
 
@@ -136,8 +134,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 */
 	public boolean isValidShipPlacement(IShip ship, boolean player) {
 		// Check that allowed of that ship type have not already been placed.
-		ArrayList<IShip> sPointer = (player ? this.playerOneShips
-				: this.playerTwoShips);
+		ArrayList<IShip> sPointer = (player ? this.playerOneShips : this.playerTwoShips);
 		int shipCount = 0;
 		for (int i = 0; i < sPointer.size(); i++) {
 			if (sPointer.get(i).getShipType() == ship.getShipType()) {
@@ -170,22 +167,20 @@ public class BattleshipModel implements IBattleshipModel {
 			// the right,
 			// then to see if ship placement is valid
 			/*
-			if (prevRow < row && prevCol < col) {
-				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
-						&& (getDefenseBoard(player)[row][col + 1] != DefenseTileStatus.OCEAN))
-					return false;
-			}
-			*/
+			 * if (prevRow < row && prevCol < col) { if
+			 * ((getDefenseBoard(player)[row - 1][col] !=
+			 * DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col +
+			 * 1] != DefenseTileStatus.OCEAN)) return false; }
+			 */
 			// checks if ship is placed diagonally top on the left, bottom on
 			// the right,
 			// then to see if ship placement is valid
 			/*
-			if (prevRow < row && prevCol > col) {
-				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
-						&& (getDefenseBoard(player)[row][col - 1] != DefenseTileStatus.OCEAN))
-					return false;
-			}
-			*/
+			 * if (prevRow < row && prevCol > col) { if
+			 * ((getDefenseBoard(player)[row - 1][col] !=
+			 * DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col -
+			 * 1] != DefenseTileStatus.OCEAN)) return false; }
+			 */
 			prevRow = row;
 			prevCol = col;
 		}
@@ -193,47 +188,53 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
- 	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
- 	 * 
- 	 * @throws IllegalStateException if game is not in Play Mode or if game is over
- 	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
- 	 * @return returns an FireResult enum representing Status of attack
- 	 */
+	 * Sends an attack to given position. If the attack returns a miss, switch
+	 * the active turn
+	 * 
+	 * @throws IllegalStateException
+	 *             if game is not in Play Mode or if game is over
+	 * @throws IllegalArgumentException
+	 *             if the same arguments would cause isValidAttackLocation to
+	 *             return false
+	 * @return returns an FireResult enum representing Status of attack
+	 */
 	public FireResult attackLocation(int col, char row) {
-		if(this.isGameOver() || !this.isInPlayMode()) {
+		if (this.isGameOver() || !this.isInPlayMode()) {
 			throw new IllegalStateException("Game is over or not in play mode.");
-		}	
+		}
 		// Check the position for validity and throw an exception if invalid
-		if(!isValidAttackLocation(col, row)) {
+		if (!isValidAttackLocation(col, row)) {
 			throw new IndexOutOfBoundsException("That is not a valid attack position!");
 		} else {
 			// check the given space for a ship and return if the attack was:
 			// EMPTY, HIT, SUNK
 			int player;
-			// if current player is player 1, set the player variable to player 2 to pull up their board
+			// if current player is player 1, set the player variable to player
+			// 2 to pull up their board
 			// and vice versa
-			if(isPlayerTurn()) {
+			if (isPlayerTurn()) {
 				player = 1;
 			} else {
 				player = 0;
 			}
-			// check the status of the attacked tile. If it is an OCEAN tile, report a miss
-			if(getDefenseBoard(!isPlayerTurn())[row][col] == DefenseTileStatus.OCEAN) {
+			// check the status of the attacked tile. If it is an OCEAN tile,
+			// report a miss
+			if (getDefenseBoard(!isPlayerTurn())[row][col] == DefenseTileStatus.OCEAN) {
 				return FireResult.MISS;
-				
+
 			} else { // this is where it gets hard...
-				
+
 				return FireResult.HIT;
 				// check if the ship that was hit is going be sunk from this hit
-//				for(int i = 0; i < playerOneShips.size(); i++) {
-//					String[] attkLoc = new String[2];
-//					attkLoc[0] = Integer.toString(col);
-//					attkLoc[1] = Character.toString(row);
-//					String[] loc = playerOneShips.get(i).getConsumingCells();
-//					if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
-//						
-//					}
-//				}
+				// for(int i = 0; i < playerOneShips.size(); i++) {
+				// String[] attkLoc = new String[2];
+				// attkLoc[0] = Integer.toString(col);
+				// attkLoc[1] = Character.toString(row);
+				// String[] loc = playerOneShips.get(i).getConsumingCells();
+				// if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
+				//
+				// }
+				// }
 			}
 		}
 	}
@@ -389,17 +390,17 @@ public class BattleshipModel implements IBattleshipModel {
 	public void reset() {
 		int[][][] test = new int[2][10][10];
 		this.offenseBoards = new OffensiveTileStatus[2][10][10];
-		for(int i = 0; i < 2; i++) {
-			for(int ii = 0; ii < 10; ii++){
-				for(int iii = 0; iii < 10; iii++){
+		for (int i = 0; i < 2; i++) {
+			for (int ii = 0; ii < 10; ii++) {
+				for (int iii = 0; iii < 10; iii++) {
 					this.offenseBoards[i][ii][iii] = OffensiveTileStatus.UNKNOWN;
 				}
 			}
 		}
 		this.defenseBoards = new DefenseTileStatus[2][10][10];
-		for(int i = 0; i < 2; i++) {
-			for(int ii = 0; ii < 10; ii++){
-				for(int iii = 0; iii < 10; iii++){
+		for (int i = 0; i < 2; i++) {
+			for (int ii = 0; ii < 10; ii++) {
+				for (int iii = 0; iii < 10; iii++) {
 					this.defenseBoards[i][ii][iii] = DefenseTileStatus.OCEAN;
 				}
 			}

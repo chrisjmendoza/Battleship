@@ -21,7 +21,7 @@ public class BattleshipKicker {
 				.println("Created by: Casey Riggin, Christopher Mendoza, Peter Kim, Sai Chang");
 		System.out.println("AKA: Team Rocket.");
 		System.out.println("Class: AD310");
-		System.out.println("Quarter: Fall '15");
+		System.out.println("Quarter: Fall 2015");
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
