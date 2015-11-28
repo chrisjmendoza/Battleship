@@ -223,19 +223,19 @@ public class BattleshipModel implements IBattleshipModel {
 				
 			} else { // this is where it gets hard...
 				
+				return FireResult.HIT;
 				// check if the ship that was hit is going be sunk from this hit
-				for(int i = 0; i < playerOneShips.size(); i++) {
-					String[] attkLoc = new String[2];
-					attkLoc[0] = Integer.toString(col);
-					attkLoc[1] = Character.toString(row);
-					String[] loc = playerOneShips.get(i).getConsumingCells();
-					if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
-						
-					}
-				}
+//				for(int i = 0; i < playerOneShips.size(); i++) {
+//					String[] attkLoc = new String[2];
+//					attkLoc[0] = Integer.toString(col);
+//					attkLoc[1] = Character.toString(row);
+//					String[] loc = playerOneShips.get(i).getConsumingCells();
+//					if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
+//						
+//					}
+//				}
 			}
 		}
-		return FireResult.HIT;
 	}
 
 	public boolean isValidAttackLocation(int col, char row) {
