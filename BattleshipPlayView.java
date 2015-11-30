@@ -48,7 +48,7 @@ public class BattleshipPlayView {
 				String tile = " ";
 				switch (offense[j][i]) {
 		        	case UNKNOWN:
-		        		tile = " ";
+		        		tile = "~";
 		                break;
 		            case MISS:
 		            	tile = "O";
@@ -69,19 +69,26 @@ public class BattleshipPlayView {
 		            	tile = "C";
 		                break;
 		        }
+				if (j == 0) {
+					System.out.print((char) ('A' + i));
+					System.out.print(" ");
+				}
 				System.out.print("| " + tile + " ");
 			}
 			System.out.println("|");
+			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
+			System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 		}
 		
 		//Prints Defense board
 		System.out.println("\n\nYour Fleet\n");
 		for(int i = 0; i < 10; i++) {
+			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
 			for(int j = 0; j < 10; j++) {
 				String tile = "";
 				switch (defense[j][i]) {
 		        	case OCEAN:
-		        		tile = " ";
+		        		tile = "~";
 		                break;
 		            case SHIP_DESTROYER:
 		            	tile = "D";
@@ -96,6 +103,10 @@ public class BattleshipPlayView {
 		            	tile = "C";
 		                break;
 		        }
+				if (j == 0) {
+					System.out.print((char) ('A' + i));
+					System.out.print(" ");
+				}
 				System.out.print("| " + tile + " ");
 			}
 			System.out.println("|");
