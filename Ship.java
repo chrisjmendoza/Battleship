@@ -97,6 +97,6 @@ public class Ship implements IShip {
 	}
 
 	public boolean isValidShipValues() {
-		return Pattern.matches("^[A-J]{1}(10|[1-9]{1})$", this.getOrigin());
+		return Pattern.matches("^[A-J]{1}(10|[1-9]){1}$", this.getOrigin());
 	}
 }
