@@ -189,8 +189,8 @@ public class BattleshipModel implements IBattleshipModel {
 			// then to see if ship placement is valid
 			if (prevRow > row && prevCol > col) { 
 				if((getDefenseBoard(player)[row + 1][col] !=
-					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] 
-					!= DefenseTileStatus.OCEAN)) 
+					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] != 
+					DefenseTileStatus.OCEAN)) 
 					return false;
 			}
 			
@@ -233,10 +233,11 @@ public class BattleshipModel implements IBattleshipModel {
 			// check the status of the attacked tile. If it is an OCEAN tile,
 			// report a miss
 			if (getDefenseBoard(!isPlayerTurn())[row][col] == DefenseTileStatus.OCEAN) {
+				currentPlayersTurn = !currentPlayersTurn;
+				getOffensiveBoard(isPlayerTurn())[row][col] = OffensiveTileStatus.MISS;
 				return FireResult.MISS;
-
 			} else { // this is where it gets hard...
-
+				getOffensiveBoard(isPlayerTurn())[row][col] = OffensiveTileStatus.HIT_SHIP;
 				return FireResult.HIT;
 				// check if the ship that was hit is going be sunk from this hit
 				// for(int i = 0; i < playerOneShips.size(); i++) {
@@ -253,32 +254,8 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	public boolean isValidAttackLocation(int col, char row) {
-		int y;
 		int player;
-		if (row == 'A' || row == 'a')
-			y = 0;
-		else if (row == 'B' || row == 'b')
-			y = 1;
-		else if (row == 'C' || row == 'c')
-			y = 2;
-		else if (row == 'D' || row == 'd')
-			y = 3;
-		else if (row == 'E' || row == 'e')
-			y = 4;
-		else if (row == 'F' || row == 'f')
-			y = 5;
-		else if (row == 'G' || row == 'g')
-			y = 6;
-		else if (row == 'H' || row == 'h')
-			y = 7;
-		else if (row == 'I' || row == 'i')
-			y = 8;
-		else if (row == 'J' || row == 'j')
-			y = 9;
-		else
-			return false;
-		if (col < 1 || col > 10)
-			return false;
+		int y = ("" + row).toLowerCase().toCharArray()[0] - 'a';
 		if (currentPlayersTurn)
 			player = 1;
 		else
@@ -294,13 +271,13 @@ public class BattleshipModel implements IBattleshipModel {
 	 * 
 	 * @return true if the active turn is player 1.
 	 * @return false if the active turn is player 2.
-	 * @throws IllegalStateException
-	 *             if not in play mode or game is over
 	 */
 	public boolean isPlayerTurn() {
+		/*
 		if (this.isGameOver() || !this.isInPlayMode()) {
 			throw new IllegalStateException("Game is over or not in play mode.");
 		}
+		*/
 		return this.currentPlayersTurn;
 	}
 
