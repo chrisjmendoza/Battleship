@@ -1,4 +1,4 @@
- /**
+/**
   * The programatic interface for the Battleship Model class.
   * This interface supports communication with both the view
   * and controller classes in the Battleship application.
@@ -9,6 +9,7 @@
   * @author Sai Chang
   */
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * The Battleship's view and controller during its play phase
@@ -122,20 +123,29 @@ public class BattleshipPlayView {
 		char row;
 		int column;
 		int player;
-		if(model.isPlayerTurn())
+		if(model.isPlayerTurn()) {
 			player = 1;
-		else
+		} else {
 			player = 2;
+		}
 		while(attack) {
 			System.out.println("Admiral Player " + player + ", where shall we attack: ");
 			String place = input.nextLine();
-			row = place.charAt(0);
-			int length = place.length();
-			column = Integer.parseInt(place.substring(1, length));
-			if(model.isValidAttackLocation(column, row)) {
-				model.attackLocation(column, row);
-				System.out.println("Attacking row " + row + ", column " + column);
-				attack = false;
+			if(Pattern.matches("^[A-J]{1}(10|[1-9]){1}$", place)) {
+				row = place.charAt(0);
+				column = Integer.parseInt(place.substring(1));
+				if(model.isValidAttackLocation(column, row)) {
+					System.out.println("Attacking row " + row + ", column " + column);
+					if(FireResult.HIT == model.attackLocation(column, row)) {
+						System.out.println("Enemy ship hit!");
+						//check if ship sunk and print appropriate message
+					} else {
+						System.out.println("The attack was a miss...");
+					}
+					attack = false;
+				} else {
+					System.out.println("Invalid attack location, try again.");
+				}
 			} else {
 				System.out.println("Invalid attack location, try again.");
 			}
