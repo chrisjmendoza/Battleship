@@ -52,7 +52,8 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
-	 * @param player the game shall start with, true being player 1, false
+	 * @param the
+	 *            player the game shall start with, true being player 1, false
 	 *            being player 2
 	 * @throws IllegalStateException
 	 *             if not all ships have been placed for both players or if game
@@ -149,8 +150,8 @@ public class BattleshipModel implements IBattleshipModel {
 		int prevCol = -1;
 		for (String cell : ship.getConsumingCells()) {
 			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
-			int col = Integer.parseInt(cell.substring(1));
-			if (row < 0 || row > 9 || col < 0 || col > 9) {
+			int col = Integer.parseInt(cell.substring(1)) - 1;
+			if (row < 0 || row > 9 || col < 0 || col > 10) {
 				// Check that all parts of the ship are on the board
 				return false;
 			} else if (getDefenseBoard(player)[row][col] != DefenseTileStatus.OCEAN) {
@@ -159,27 +160,40 @@ public class BattleshipModel implements IBattleshipModel {
 				return false;
 			}
 
-			// Assuming 0,0 is the top left and 9,9 the bottom right
-			// We should probably tidy these up
-
-			// checks if ship is placed diagonally bottom on the left, top on
-			// the right,
+			
+			// checks if ship is placed SE
 			// then to see if ship placement is valid
-			/*
-			 * if (prevRow < row && prevCol < col) { if
-			 * ((getDefenseBoard(player)[row - 1][col] !=
-			 * DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col +
-			 * 1] != DefenseTileStatus.OCEAN)) return false; }
-			 */
-			// checks if ship is placed diagonally top on the left, bottom on
-			// the right,
+			if (prevRow < row && prevCol < col) {
+				if((getDefenseBoard(player)[row - 1][col] != 
+					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col - 1] != 
+					DefenseTileStatus.OCEAN))
+					return false;
+			}
+			// checks if ship is placed SW
 			// then to see if ship placement is valid
-			/*
-			 * if (prevRow < row && prevCol > col) { if
-			 * ((getDefenseBoard(player)[row - 1][col] !=
-			 * DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col -
-			 * 1] != DefenseTileStatus.OCEAN)) return false; }
-			 */
+			if (prevRow < row && prevCol > col) { 
+				if((getDefenseBoard(player)[row - 1][col] !=
+					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] 
+							!= DefenseTileStatus.OCEAN)) 
+					return false;
+			}
+			// checks if ship is placed NE
+			// then to see if ship placement is valid
+			if (prevRow > row && prevCol < col) {
+				if((getDefenseBoard(player)[row + 1][col] != 
+					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col - 1] != 
+					DefenseTileStatus.OCEAN))
+					return false;
+			}
+			// checks if ship is placed NW
+			// then to see if ship placement is valid
+			if (prevRow > row && prevCol > col) { 
+				if((getDefenseBoard(player)[row + 1][col] !=
+					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] 
+					!= DefenseTileStatus.OCEAN)) 
+					return false;
+			}
+			
 			prevRow = row;
 			prevCol = col;
 		}
