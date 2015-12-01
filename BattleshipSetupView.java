@@ -43,8 +43,7 @@ public class BattleshipSetupView {
 			do {
 				if (s != null) {
 					System.out.println("");
-					System.out
-							.println("Invalid Ship Placement. Please try again. :(");
+					System.out.println("Invalid Ship Placement. Please try again. :(");
 				}
 				String origin = getPosition(toPlace[shipNum]);
 				Direction direction = getDirection(toPlace[shipNum]);
@@ -82,7 +81,7 @@ public class BattleshipSetupView {
 				direction = Direction.N;
 				validInput = true;
 			} else if (in.equals("NE")) {
-				direction = Direction.N;
+				direction = Direction.NE;
 				validInput = true;
 			} else if (in.equals("E")) {
 				direction = Direction.E;
