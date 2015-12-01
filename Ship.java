@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 
 public class Ship implements IShip {
 
-	ShipType type;
-	Direction direction;
-	String origin;
+	private ShipType type;
+	private Direction direction;
+	private String origin;
 
 	/**
 	 * Ship constructor
@@ -36,7 +36,7 @@ public class Ship implements IShip {
 	/**
 	 * Getter for ship origin
 	 */
-	public String getOrigin() {
+	private String getOrigin() {
 		return this.origin;
 	}
 

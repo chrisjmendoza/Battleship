@@ -4,7 +4,7 @@ public enum FireResult
 	MISS, 
 	// return status, a hit, doesn't sink a ship
 	HIT, 
-	// return status, a hit, sunk destroyer 
+	// return status, a hit, sunk destroyer
 	SUNK_DESTROYER, 
 	// return status, a hit, sunk cruiser
 	SUNK_CRUISER, 

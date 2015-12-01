@@ -19,9 +19,9 @@ import java.util.regex.Pattern;
  * @author Peter Kim
  * @author Sai Chang
  */
-public class BattleshipPlayView {
+class BattleshipPlayView {
 	private BattleshipModel model;
-	Scanner input;
+	private Scanner input;
 	
 	/**
 	 * Constructor for the Battleship's play view

@@ -8,7 +8,7 @@
   * @author Peter Kim
   * @author Sai Chang
   */
- public interface IBattleshipModel {
+ interface IBattleshipModel {
  	
  	/*
  	 * Suggesting an array of Tiles to store and access board
@@ -20,26 +20,26 @@
  	 * Get-er for if the game is in Setup Mode.
  	 * @return true if game is in setup mode.
  	 */
- 	public boolean isInSetupMode();
+	boolean isInSetupMode();
  	
  	/**
  	 * Get-er for if the game is Play Mode.
  	 * @return true if game is in play mode.
  	 */
- 	public boolean isInPlayMode();
+	boolean isInPlayMode();
  	
  	/**
- 	* @param the player the game shall start with, true being player 1, false being player 2
+ 	* @param player the game shall start with, true being player 1, false being player 2
  	* @throws IllegalStateException if not all ships have been placed for both players or if game is already in play mode
  	*/
- 	public void moveToPlay(boolean player);
+	void moveToPlay(boolean player);
  	
  	/**
  	* Returns true/false if all the correct ships have been placed for the given player
  	* @param player true for player 1, false for player 2
  	* @return true/false if all ships have been placed for the given player
  	*/
- 	public boolean areAllShipsPlaced(boolean player);
+	boolean areAllShipsPlaced(boolean player);
  	
  	/**
  	 * Places Ship at the given location
@@ -48,7 +48,7 @@
  	 * @throws IllegalArgumentException if same arguments return false for isValidShipPlacement method
  	 * @throws IllegalStateException is not in setup mode
  	 */
- 	public void placeShip (IShip ship, boolean player);
+	void placeShip(IShip ship, boolean player);
  	
  	/**
  	 * Method checks that placement of the given ship is valid by meeting the following conditions:
@@ -58,14 +58,12 @@
  	 * 4.	That the allowed amount of that ship type have not been already placed by
  	 * that player.
  	 * 
- 	 * @param col column position to place ship
- 	 * @param row row position to place the ship
- 	 * @param ship the type of ship being placed, used to test validity of input
- 	 * @player true for player 1, false for player 2
+  	 * @param ship the type of ship being placed, used to test validity of input
+ 	 * @param player true for player 1, false for player 2
  	 * @throws IllegalStateException is not in setup mode
  	 * @returns true if placement is valid
  	 */
- 	public boolean isValidShipPlacement(IShip ship, boolean player);
+	boolean isValidShipPlacement(IShip ship, boolean player);
  	
  	/**
  	 * Sends an attack to given position. If the attack returns a miss, switch the active turn
@@ -76,7 +74,7 @@
  	 * @throws IllegalArgumentException if the same arguments would cause isValidAttackLocation to return false
  	 * @return returns an FireResult  representing Status of attack
  	 */
- 	public FireResult attackLocation(int col, char row);
+	FireResult attackLocation(int col, char row);
  	
  	/**
  	 * This method returns if the arguments result in a valid place to attack
@@ -88,7 +86,7 @@
  	 * @throws IllegalStateException if game is not in Play Mode or if game is over
  	 * @return if the place is a valid way to attack the ship
  	 */
- 	public boolean isValidAttackLocation(int col, char row);
+	boolean isValidAttackLocation(int col, char row);
  	
  	/**
  	 * Checks if the current players turn is that of player one.
@@ -96,32 +94,32 @@
  	 * @return false if the active turn is player 2.
  	 * @throws IllegalStateException if not in play mode or game is over
  	 */
- 	public boolean isPlayerTurn();
+	boolean isPlayerTurn();
  	
  	/**
  	 * Allows view of defensive boards
  	 * @param player true for player 1, false for player 2
  	 * @return an array of Strings representing player 2's attack board
  	 */
- 	public DefenseTileStatus[][] getDefenseBoard(boolean player);
+	DefenseTileStatus[][] getDefenseBoard(boolean player);
  	
  	/**
  	 * Allows view of the offensive boards
  	 * @param player true for player 1, false for player 2
  	 * @return an array of Strings representing player 2's board
  	 */
- 	public OffensiveTileStatus[][] getOffensiveBoard(boolean player);
+	OffensiveTileStatus[][] getOffensiveBoard(boolean player);
  	
  	/**
  	 * Tests to see if game is over
  	 * @return true if game is over and false if not
  	 */
- 	public boolean isGameOver();
+	boolean isGameOver();
  	
  	/**
  	 * Sets board state so that game may begin anew
  	 */
- 	public void reset();
+	void reset();
  }
  
 

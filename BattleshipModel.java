@@ -17,12 +17,12 @@ public class BattleshipModel implements IBattleshipModel {
 	/**
 	 * The array list contain player one's Ships
 	 */
-	public ArrayList<IShip> playerOneShips;
+	private ArrayList<IShip> playerOneShips;
 
 	/**
 	 * The array list contain player two's Ships
 	 */
-	public ArrayList<IShip> playerTwoShips;
+	private ArrayList<IShip> playerTwoShips;
 
 	/**
 	 * Represents what state the game is in.
@@ -52,8 +52,7 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
-	 * @param the
-	 *            player the game shall start with, true being player 1, false
+	 * @param player the game shall start with, true being player 1, false
 	 *            being player 2
 	 * @throws IllegalStateException
 	 *             if not all ships have been placed for both players or if game
@@ -260,10 +259,7 @@ public class BattleshipModel implements IBattleshipModel {
 			player = 1;
 		else
 			player = 0;
-		if (offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN)
-			return true;
-		else
-			return false;
+		return offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN;
 	}
 
 	/**

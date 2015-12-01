@@ -12,13 +12,8 @@ import java.util.Scanner;
 /**
  * Allows a player to place their fleet Asks for input on ship location and
  * sends
- * 
- * @param player
- *            set to true to setup for player 1 and false for player 2
- * @param model
- *            pass the model the setup is to interact with
  */
-public class BattleshipSetupView {
+class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
@@ -60,14 +55,12 @@ public class BattleshipSetupView {
 	 * Consults with the model to find out which direction the ship is facing
 	 * and at what angle.
 	 * 
-	 * @param shipName
-	 *            Name of the ship being set.
-	 * @param length
-	 *            Length of the ship being set.
+	 * @param ship
+	 *            The ship object to get the direction from
 	 * @return Returns a Direction enum.
 	 * 
 	 */
-	public Direction getDirection(ShipType ship) {
+	private Direction getDirection(ShipType ship) {
 		boolean validInput = false;
 		Direction direction = null;
 		while (!validInput) {
@@ -112,14 +105,12 @@ public class BattleshipSetupView {
 	 * Consults with the model to find out where the ship is positioned on the
 	 * board.
 	 * 
-	 * @param shipName
+	 * @param ship
 	 *            Name of the ship being set.
-	 * @param length
-	 *            Length of the ship being set.
 	 * @return Returns a String example: "B9" translating to the position of the
 	 *         ship.
 	 */
-	public String getPosition(ShipType ship) {
+	private String getPosition(ShipType ship) {
 		System.out.print("Where shall we place " + ship.toString()
 				+ "? (Ex: A1): ");
 		return input.nextLine();
@@ -131,7 +122,7 @@ public class BattleshipSetupView {
 	 * @param player
 	 *            Boolean value that determines which player's board is set up.
 	 */
-	public void printBoard(boolean player) {
+	private void printBoard(boolean player) {
 		System.out.println("\n\nCurrent Setup Board for Player: "
 				+ (player ? 1 : 2));
 		DefenseTileStatus[][] defense = model.getDefenseBoard(player);
