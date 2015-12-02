@@ -12,8 +12,13 @@ import java.util.Scanner;
 /**
  * Allows a player to place their fleet Asks for input on ship location and
  * sends
+ * 
+ * @param player
+ *            set to true to setup for player 1 and false for player 2
+ * @param model
+ *            pass the model the setup is to interact with
  */
-class BattleshipSetupView {
+public class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
@@ -55,12 +60,14 @@ class BattleshipSetupView {
 	 * Consults with the model to find out which direction the ship is facing
 	 * and at what angle.
 	 * 
-	 * @param ship
-	 *            The ship object to get the direction from
+	 * @param shipName
+	 *            Name of the ship being set.
+	 * @param length
+	 *            Length of the ship being set.
 	 * @return Returns a Direction enum.
 	 * 
 	 */
-	private Direction getDirection(ShipType ship) {
+	public Direction getDirection(ShipType ship) {
 		boolean validInput = false;
 		Direction direction = null;
 		while (!validInput) {
@@ -105,12 +112,14 @@ class BattleshipSetupView {
 	 * Consults with the model to find out where the ship is positioned on the
 	 * board.
 	 * 
-	 * @param ship
+	 * @param shipName
 	 *            Name of the ship being set.
+	 * @param length
+	 *            Length of the ship being set.
 	 * @return Returns a String example: "B9" translating to the position of the
 	 *         ship.
 	 */
-	private String getPosition(ShipType ship) {
+	public String getPosition(ShipType ship) {
 		System.out.print("Where shall we place " + ship.toString()
 				+ "? (Ex: A1): ");
 		return input.nextLine();
@@ -122,7 +131,7 @@ class BattleshipSetupView {
 	 * @param player
 	 *            Boolean value that determines which player's board is set up.
 	 */
-	private void printBoard(boolean player) {
+	public void printBoard(boolean player) {
 		System.out.println("\n\nCurrent Setup Board for Player: "
 				+ (player ? 1 : 2));
 		DefenseTileStatus[][] defense = model.getDefenseBoard(player);
@@ -149,7 +158,7 @@ class BattleshipSetupView {
 					tile = "B";
 					break;
 				case SHIP_CARRIER:
-					tile = "C";
+					tile = "A";
 					break;
 				}
 				if (j == 0) {
