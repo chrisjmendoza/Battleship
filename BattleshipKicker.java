@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Sai Chang
  *
  */
-class BattleshipKicker {
+public class BattleshipKicker {
 	public static void main(String[] args) {
 
 		BattleshipModel model = new BattleshipModel();
@@ -31,9 +31,13 @@ class BattleshipKicker {
 
 		//Go through player one
 
-		setup.collectDataForPlayer(true);
-		setup.collectDataForPlayer(false);
-
+		boolean playAgain = true;
+		while(playAgain) {
+			setup.collectDataForPlayer(true);
+			setup.collectDataForPlayer(false);
+			playAgain = play.runGame();
+			model.reset();
+		}
 	}
 	
 	
