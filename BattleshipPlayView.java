@@ -19,9 +19,41 @@ import java.util.regex.Pattern;
  * @author Peter Kim
  * @author Sai Chang
  */
-class BattleshipPlayView {
+public class BattleshipPlayView {
 	private BattleshipModel model;
-	private Scanner input;
+	Scanner input;
+	
+	/**
+	 * Runs a game of Battleship and prompts user to play again
+	 * @return returns true if Battleship will be played again or false otherwise
+	 */
+	public boolean runGame() {
+		model.moveToPlay(true);
+		boolean playAgain = true;
+		while(!model.isGameOver()) {
+			printBoard(model.isPlayerTurn());
+			askForFireShot();
+		}
+		
+		printGameOver();
+		
+		boolean askPrompt = true;
+		while(askPrompt) {
+			System.out.println("playAgain? y/n ");
+			String yes = input.nextLine();
+			if(yes.equalsIgnoreCase("n")) {
+				playAgain = false;
+				askPrompt = false;
+			} if(yes.equalsIgnoreCase("y")) {
+				askPrompt = false;
+			} else {
+				System.out.println("Sorry, you're mumbling. I'll ask again.");
+			}
+		}
+		
+		return playAgain;
+	}
+	
 	
 	/**
 	 * Constructor for the Battleship's play view
@@ -42,12 +74,14 @@ class BattleshipPlayView {
 		//Prints Offense board
 		System.out.println("\n\nEnemy's Fleet\n");
 		for(int i = 0; i < 10; i++) {
+			System.out.print("  ");
 			for(int j = 0; j < 10; j++) {
-				System.out.println("+---+");
+				System.out.print("+---");
 			}
+			System.out.println("+");
 			for(int j = 0; j < 10; j++) {
 				String tile = " ";
-				switch (offense[j][i]) {
+				switch (offense[i][j]) {
 		        	case UNKNOWN:
 		        		tile = "~";
 		                break;
@@ -67,7 +101,7 @@ class BattleshipPlayView {
 		            	tile = "B";
 		                break;
 		            case SUNK_CARRIER:
-		            	tile = "C";
+		            	tile = "A";
 		                break;
 		        }
 				if (j == 0) {
@@ -77,17 +111,21 @@ class BattleshipPlayView {
 				System.out.print("| " + tile + " ");
 			}
 			System.out.println("|");
-			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-			System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 		}
+		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
+		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 		
 		//Prints Defense board
 		System.out.println("\n\nYour Fleet\n");
 		for(int i = 0; i < 10; i++) {
-			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
+			System.out.print("  ");
+			for(int j = 0; j < 10; j++) {
+				System.out.print("+---");
+			}
+			System.out.println("+");
 			for(int j = 0; j < 10; j++) {
 				String tile = "";
-				switch (defense[j][i]) {
+				switch (defense[i][j]) {
 		        	case OCEAN:
 		        		tile = "~";
 		                break;
@@ -101,7 +139,7 @@ class BattleshipPlayView {
 		            	tile = "B";
 		                break;
 		            case SHIP_CARRIER:
-		            	tile = "C";
+		            	tile = "A";
 		                break;
 		        }
 				if (j == 0) {
@@ -112,13 +150,14 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
+		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
+		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 	}
     
 	/**
-	 * Asks for the shot, displays a message if this is a retry.
-	 * @param retry True if this attempt is a retry attempt.
+	 * Asks for the shot
 	*/
-	public void askForFireShot(boolean retry) {
+	public void askForFireShot() {
 		boolean attack = true;
 		char row;
 		int column;
