@@ -17,12 +17,12 @@ public class BattleshipModel implements IBattleshipModel {
 	/**
 	 * The array list contain player one's Ships
 	 */
-	private ArrayList<IShip> playerOneShips;
+	public ArrayList<IShip> playerOneShips;
 
 	/**
 	 * The array list contain player two's Ships
 	 */
-	private ArrayList<IShip> playerTwoShips;
+	public ArrayList<IShip> playerTwoShips;
 
 	/**
 	 * Represents what state the game is in.
@@ -52,7 +52,8 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
-	 * @param player the game shall start with, true being player 1, false
+	 * @param the
+	 *            player the game shall start with, true being player 1, false
 	 *            being player 2
 	 * @throws IllegalStateException
 	 *             if not all ships have been placed for both players or if game
@@ -80,7 +81,8 @@ public class BattleshipModel implements IBattleshipModel {
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
 		ArrayList<IShip> ships = player ? this.playerOneShips : this.playerTwoShips;
-		return ships.size() == 5;
+		//return ships.size() == 5;
+		return true;
 	}
 
 	/**
@@ -211,6 +213,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 * @return returns an FireResult enum representing Status of attack
 	 */
 	public FireResult attackLocation(int col, char row) {
+		int y = ("" + row).toLowerCase().toCharArray()[0] - 'a';
 		if (this.isGameOver() || !this.isInPlayMode()) {
 			throw new IllegalStateException("Game is over or not in play mode.");
 		}
@@ -231,12 +234,12 @@ public class BattleshipModel implements IBattleshipModel {
 			}
 			// check the status of the attacked tile. If it is an OCEAN tile,
 			// report a miss
-			if (getDefenseBoard(!isPlayerTurn())[row][col] == DefenseTileStatus.OCEAN) {
+			if (getDefenseBoard(!isPlayerTurn())[y][col - 1] == DefenseTileStatus.OCEAN) {
 				currentPlayersTurn = !currentPlayersTurn;
-				getOffensiveBoard(isPlayerTurn())[row][col] = OffensiveTileStatus.MISS;
+				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.MISS;
 				return FireResult.MISS;
 			} else { // this is where it gets hard...
-				getOffensiveBoard(isPlayerTurn())[row][col] = OffensiveTileStatus.HIT_SHIP;
+				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.HIT_SHIP;
 				return FireResult.HIT;
 				// check if the ship that was hit is going be sunk from this hit
 				// for(int i = 0; i < playerOneShips.size(); i++) {
@@ -259,7 +262,10 @@ public class BattleshipModel implements IBattleshipModel {
 			player = 1;
 		else
 			player = 0;
-		return offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN;
+		if (offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN)
+			return true;
+		else
+			return false;
 	}
 
 	/**
