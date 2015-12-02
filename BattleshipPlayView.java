@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * @author Peter Kim
  * @author Sai Chang
  */
-public class BattleshipPlayView {
+class BattleshipPlayView {
 	private BattleshipModel model;
 	Scanner input;
 	

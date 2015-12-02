@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Sai Chang
  *
  */
-public class BattleshipKicker {
+class BattleshipKicker {
 	public static void main(String[] args) {
 
 		BattleshipModel model = new BattleshipModel();

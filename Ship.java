@@ -91,7 +91,7 @@ public class Ship implements IShip {
 					row = row - 1;
 				}
 			}
-			consumedCells[i] = "" + (char)((char)'A' + row) + Integer.toString(col);
+			consumedCells[i] = "" + (char)('A' + row) + Integer.toString(col);
 		}
 		return consumedCells;
 	}

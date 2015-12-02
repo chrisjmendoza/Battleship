@@ -18,7 +18,7 @@ import java.util.Scanner;
  * @param model
  *            pass the model the setup is to interact with
  */
-public class BattleshipSetupView {
+class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
