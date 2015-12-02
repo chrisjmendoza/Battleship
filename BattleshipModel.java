@@ -145,8 +145,8 @@ public class BattleshipModel implements IBattleshipModel {
 		if (shipCount >= maxAllowed) {
 			return false;
 		}
-		int prevRow = -1;
-		int prevCol = -1;
+		int prevRow = (((int) ship.getConsumingCells()[0].toLowerCase().toCharArray()[0]) - 'a');
+		int prevCol = Integer.parseInt(ship.getConsumingCells()[0].substring(1)) - 1;
 		for (String cell : ship.getConsumingCells()) {
 			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 			int col = Integer.parseInt(cell.substring(1)) - 1;
