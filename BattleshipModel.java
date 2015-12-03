@@ -299,7 +299,7 @@ public class BattleshipModel implements IBattleshipModel {
 
 	public boolean isValidAttackLocation(int col, char row) {
 		int y = ("" + row).toLowerCase().toCharArray()[0] - 'a';
-		return this.getOffensiveBoard(this.isPlayerTurn())[y][col-1] == OffensiveTileStatus.UNKNOWN;
+		return this.getOffensiveBoard(this.isPlayerTurn())[y][col - 1] == OffensiveTileStatus.UNKNOWN;
 	}
 
 	/**
@@ -341,29 +341,31 @@ public class BattleshipModel implements IBattleshipModel {
 	 */
 	public boolean isGameOver() {
 		// do player one
-		int[][] playerOneCells = getPlayerShipCells(true);
+		boolean playerOneWonGame = true;
+		int[][] playerOneCells = getPlayerShipCells(false);
 		for (int i = 0; i < playerOneCells.length; i++) {
 			int row = playerOneCells[i][0];
 			int col = playerOneCells[i][1];
-			if (this.getOffensiveBoard(false)[row][col] == OffensiveTileStatus.MISS
-					|| this.getOffensiveBoard(false)[row][col] == OffensiveTileStatus.UNKNOWN) {
-				return false;
+			if (this.getOffensiveBoard(true)[row][col] == OffensiveTileStatus.MISS
+					|| this.getOffensiveBoard(true)[row][col] == OffensiveTileStatus.UNKNOWN) {
+				playerOneWonGame = false;
 			}
 		}
 
 		// Do player two
-		int[][] playerTwoCells = getPlayerShipCells(false);
+		boolean playerTwoWonGame = true;
+		int[][] playerTwoCells = getPlayerShipCells(true);
 		for (int i = 0; i < playerTwoCells.length; i++) {
 			int row = playerTwoCells[i][0];
 			int col = playerTwoCells[i][1];
-			if (this.getOffensiveBoard(true)[row][col] == OffensiveTileStatus.MISS
-					|| this.getOffensiveBoard(true)[row][col] == OffensiveTileStatus.UNKNOWN) {
-				return false;
+			if (this.getOffensiveBoard(false)[row][col] == OffensiveTileStatus.MISS
+					|| this.getOffensiveBoard(false)[row][col] == OffensiveTileStatus.UNKNOWN) {
+				playerTwoWonGame = false;
 			}
 		}
 
 		// return true if you got here
-		return true;
+		return playerOneWonGame || playerTwoWonGame;
 	}
 
 	/**
@@ -382,7 +384,7 @@ public class BattleshipModel implements IBattleshipModel {
 		for (IShip s : (player ? this.playerOneShips : this.playerTwoShips)) {
 			for (String cell : s.getConsumingCells()) {
 				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
-				int col = Integer.parseInt(cell.substring(1));
+				int col = Integer.parseInt(cell.substring(1)) - 1;
 				shipCells[i] = new int[] { row, col };
 				i++;
 			}
