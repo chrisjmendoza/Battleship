@@ -80,8 +80,7 @@ public class BattleshipModel implements IBattleshipModel {
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
 		ArrayList<IShip> ships = player ? this.playerOneShips : this.playerTwoShips;
-		//return ships.size() == 5;
-		return true;
+		return ships.size() == 5;
 	}
 
 	/**
