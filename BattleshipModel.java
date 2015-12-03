@@ -17,12 +17,12 @@ public class BattleshipModel implements IBattleshipModel {
 	/**
 	 * The array list contain player one's Ships
 	 */
-    private ArrayList<IShip> playerOneShips;
+	private ArrayList<IShip> playerOneShips;
 
 	/**
 	 * The array list contain player two's Ships
 	 */
-    private ArrayList<IShip> playerTwoShips;
+	private ArrayList<IShip> playerTwoShips;
 
 	/**
 	 * Represents what state the game is in.
@@ -52,15 +52,17 @@ public class BattleshipModel implements IBattleshipModel {
 	}
 
 	/**
-	 * @param player the game shall start with, true being player 1, false
-	 *            being player 2
+	 * @param player
+	 *            the game shall start with, true being player 1, false being
+	 *            player 2
 	 * @throws IllegalStateException
 	 *             if not all ships have been placed for both players or if game
 	 *             is already in play mode
 	 */
 	public void moveToPlay(boolean player) {
 		if (!areAllShipsPlaced(true) || !areAllShipsPlaced(false)) {
-			throw new IllegalStateException("Not all ships have been placed yet!");
+			throw new IllegalStateException(
+					"Not all ships have been placed yet!");
 		} else {
 			this.isInPlayMode = true;
 			this.currentPlayersTurn = player;
@@ -79,7 +81,8 @@ public class BattleshipModel implements IBattleshipModel {
 		// since only valid ships can be placed, you can
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
-		ArrayList<IShip> ships = player ? this.playerOneShips : this.playerTwoShips;
+		ArrayList<IShip> ships = player ? this.playerOneShips
+				: this.playerTwoShips;
 		System.out.println("Amount of Ships: " + ships.size());
 		return ships.size() == 5;
 	}
@@ -115,8 +118,8 @@ public class BattleshipModel implements IBattleshipModel {
 				int col = Integer.parseInt(cell.substring(1)) - 1;
 				getDefenseBoard(player)[row][col] = newTileType;
 			}
-			
-			//Add the ship to the existing ships
+
+			// Add the ship to the existing ships
 			(player ? this.playerOneShips : this.playerTwoShips).add(ship);
 		}
 	}
@@ -137,7 +140,8 @@ public class BattleshipModel implements IBattleshipModel {
 	 */
 	public boolean isValidShipPlacement(IShip ship, boolean player) {
 		// Check that allowed of that ship type have not already been placed.
-		ArrayList<IShip> sPointer = (player ? this.playerOneShips : this.playerTwoShips);
+		ArrayList<IShip> sPointer = (player ? this.playerOneShips
+				: this.playerTwoShips);
 		int shipCount = 0;
 		for (int i = 0; i < sPointer.size(); i++) {
 			if (sPointer.get(i).getShipType() == ship.getShipType()) {
@@ -149,8 +153,10 @@ public class BattleshipModel implements IBattleshipModel {
 		if (shipCount >= maxAllowed) {
 			return false;
 		}
-		int prevRow = (((int) ship.getConsumingCells()[0].toLowerCase().toCharArray()[0]) - 'a');
-		int prevCol = Integer.parseInt(ship.getConsumingCells()[0].substring(1)) - 1;
+		int prevRow = (((int) ship.getConsumingCells()[0].toLowerCase()
+				.toCharArray()[0]) - 'a');
+		int prevCol = Integer
+				.parseInt(ship.getConsumingCells()[0].substring(1)) - 1;
 		for (String cell : ship.getConsumingCells()) {
 			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 			int col = Integer.parseInt(cell.substring(1)) - 1;
@@ -163,40 +169,35 @@ public class BattleshipModel implements IBattleshipModel {
 				return false;
 			}
 
-			
 			// checks if ship is placed SE
 			// then to see if ship placement is valid
 			if (prevRow < row && prevCol < col) {
-				if((getDefenseBoard(player)[row - 1][col] != 
-					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col - 1] != 
-					DefenseTileStatus.OCEAN))
+				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
+						&& (getDefenseBoard(player)[row][col - 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
 			// checks if ship is placed SW
 			// then to see if ship placement is valid
-			if (prevRow < row && prevCol > col) { 
-				if((getDefenseBoard(player)[row - 1][col] !=
-					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] 
-							!= DefenseTileStatus.OCEAN)) 
+			if (prevRow < row && prevCol > col) {
+				if ((getDefenseBoard(player)[row - 1][col] != DefenseTileStatus.OCEAN)
+						&& (getDefenseBoard(player)[row][col + 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
 			// checks if ship is placed NE
 			// then to see if ship placement is valid
 			if (prevRow > row && prevCol < col) {
-				if((getDefenseBoard(player)[row + 1][col] != 
-					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col - 1] != 
-					DefenseTileStatus.OCEAN))
+				if ((getDefenseBoard(player)[row + 1][col] != DefenseTileStatus.OCEAN)
+						&& (getDefenseBoard(player)[row][col - 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
 			// checks if ship is placed NW
 			// then to see if ship placement is valid
-			if (prevRow > row && prevCol > col) { 
-				if((getDefenseBoard(player)[row + 1][col] !=
-					DefenseTileStatus.OCEAN) && (getDefenseBoard(player)[row][col + 1] != 
-					DefenseTileStatus.OCEAN)) 
+			if (prevRow > row && prevCol > col) {
+				if ((getDefenseBoard(player)[row + 1][col] != DefenseTileStatus.OCEAN)
+						&& (getDefenseBoard(player)[row][col + 1] != DefenseTileStatus.OCEAN))
 					return false;
 			}
-			
+
 			prevRow = row;
 			prevCol = col;
 		}
@@ -221,7 +222,8 @@ public class BattleshipModel implements IBattleshipModel {
 		}
 		// Check the position for validity and throw an exception if invalid
 		if (!isValidAttackLocation(col, row)) {
-			throw new IndexOutOfBoundsException("That is not a valid attack position!");
+			throw new IndexOutOfBoundsException(
+					"That is not a valid attack position!");
 		} else {
 			// check the given space for a ship and return if the attack was:
 			// EMPTY, HIT, SUNK
@@ -237,34 +239,67 @@ public class BattleshipModel implements IBattleshipModel {
 			// check the status of the attacked tile. If it is an OCEAN tile,
 			// report a miss
 			if (getDefenseBoard(!isPlayerTurn())[y][col - 1] == DefenseTileStatus.OCEAN) {
-				currentPlayersTurn = !currentPlayersTurn;
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.MISS;
+				currentPlayersTurn = !currentPlayersTurn;
 				return FireResult.MISS;
 			} else { // this is where it gets hard...
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.HIT_SHIP;
+
+				// Check to see if the hit was the last of a known ship
+				for (int i = 0; i < playerOneShips.size(); i++) {
+
+					boolean currentShipSunk = true;
+					boolean currentShipWasFiredAtThisTurn = false;
+					IShip currentShip = (!this.currentPlayersTurn ? playerOneShips
+							: playerTwoShips).get(i);
+					String[] consumingCells = currentShip.getConsumingCells();
+					for (int ii = 0; ii < consumingCells.length; ii++) {
+						// if the cell on my defensive board is ocean then set
+						// the ship being sunk to false
+						int tempRow = (((int) consumingCells[ii].toLowerCase()
+								.toCharArray()[0]) - 'a');
+						int tempCol = Integer.parseInt(consumingCells[ii]
+								.substring(1)) - 1;
+						if (getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] == OffensiveTileStatus.UNKNOWN) {
+							currentShipSunk = false;
+						}
+						if (y == (tempRow + 1) && (tempCol + 1) == col) {
+							currentShipWasFiredAtThisTurn = true;
+						}
+
+					}
+
+					if (currentShipSunk && currentShipWasFiredAtThisTurn) {
+
+						// set all cells to the sunk ship type
+						ShipType sunkType = currentShip.getShipType();
+						for (int ii = 0; ii < consumingCells.length; ii++) {
+							int tempRow = (((int) consumingCells[ii]
+									.toLowerCase().toCharArray()[0]) - 'a');
+							int tempCol = Integer.parseInt(consumingCells[ii]
+									.substring(1)) - 1;
+							getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] = sunkType == ShipType.AIRCRAFT_CARRIER ? OffensiveTileStatus.SUNK_CARRIER
+									: sunkType == ShipType.BATTLESHIP ? OffensiveTileStatus.SUNK_BATTLESHIP
+											: sunkType == ShipType.CRUISER ? OffensiveTileStatus.SUNK_CRUISER
+													: OffensiveTileStatus.SUNK_DESTROYER;
+
+						}
+
+						// figure out your return type.
+						return sunkType == ShipType.AIRCRAFT_CARRIER ? FireResult.SUNK_AIRCRAFT_CARRIER
+								: sunkType == ShipType.BATTLESHIP ? FireResult.SUNK_BATTLESHIP
+										: sunkType == ShipType.CRUISER ? FireResult.SUNK_CRUISER
+												: FireResult.SUNK_DESTROYER;
+					}
+				}
 				return FireResult.HIT;
-				// check if the ship that was hit is going be sunk from this hit
-				// for(int i = 0; i < playerOneShips.size(); i++) {
-				// String[] attkLoc = new String[2];
-				// attkLoc[0] = Integer.toString(col);
-				// attkLoc[1] = Character.toString(row);
-				// String[] loc = playerOneShips.get(i).getConsumingCells();
-				// if(loc[0].equals(attkLoc[0]) && loc[1].equals(attkLoc[1])) {
-				//
-				// }
-				// }
 			}
 		}
 	}
 
 	public boolean isValidAttackLocation(int col, char row) {
-		int player;
 		int y = ("" + row).toLowerCase().toCharArray()[0] - 'a';
-		if (currentPlayersTurn)
-			player = 1;
-		else
-			player = 0;
-        return offenseBoards[player][y][col] == OffensiveTileStatus.UNKNOWN;
+		return this.getOffensiveBoard(this.isPlayerTurn())[y][col-1] == OffensiveTileStatus.UNKNOWN;
 	}
 
 	/**
@@ -274,11 +309,6 @@ public class BattleshipModel implements IBattleshipModel {
 	 * @return false if the active turn is player 2.
 	 */
 	public boolean isPlayerTurn() {
-		/*
-		if (this.isGameOver() || !this.isInPlayMode()) {
-			throw new IllegalStateException("Game is over or not in play mode.");
-		}
-		*/
 		return this.currentPlayersTurn;
 	}
 
