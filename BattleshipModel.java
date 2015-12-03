@@ -80,6 +80,7 @@ public class BattleshipModel implements IBattleshipModel {
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
 		ArrayList<IShip> ships = player ? this.playerOneShips : this.playerTwoShips;
+		System.out.println("Amount of Ships: " + ships.size());
 		return ships.size() == 5;
 	}
 
@@ -114,6 +115,9 @@ public class BattleshipModel implements IBattleshipModel {
 				int col = Integer.parseInt(cell.substring(1)) - 1;
 				getDefenseBoard(player)[row][col] = newTileType;
 			}
+			
+			//Add the ship to the existing ships
+			(player ? this.playerOneShips : this.playerTwoShips).add(ship);
 		}
 	}
 
