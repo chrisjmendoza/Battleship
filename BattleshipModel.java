@@ -136,7 +136,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 * @param player true for player 1, false for player 2
 	 * @throws IllegalStateException
 	 *             is not in setup mode
-	 * @returns true if placement is valid
+	 * @return true if placement is valid
 	 */
 	public boolean isValidShipPlacement(IShip ship, boolean player) {
 		// Check that allowed of that ship type have not already been placed.
@@ -225,17 +225,6 @@ public class BattleshipModel implements IBattleshipModel {
 			throw new IndexOutOfBoundsException(
 					"That is not a valid attack position!");
 		} else {
-			// check the given space for a ship and return if the attack was:
-			// EMPTY, HIT, SUNK
-			int player;
-			// if current player is player 1, set the player variable to player
-			// 2 to pull up their board
-			// and vice versa
-			if (isPlayerTurn()) {
-				player = 1;
-			} else {
-				player = 0;
-			}
 			// check the status of the attacked tile. If it is an OCEAN tile,
 			// report a miss
 			if (getDefenseBoard(!isPlayerTurn())[y][col - 1] == DefenseTileStatus.OCEAN) {
@@ -305,8 +294,7 @@ public class BattleshipModel implements IBattleshipModel {
 	/**
 	 * Checks if the current players turn is that of player one.
 	 * 
-	 * @return true if the active turn is player 1.
-	 * @return false if the active turn is player 2.
+	 * @return true if the active turn is player 1. false if the active turn is player 2.
 	 */
 	public boolean isPlayerTurn() {
 		return this.currentPlayersTurn;
@@ -372,7 +360,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 * Helper method is going to get the cells that each ship for a given player
 	 * is currently taking.
 	 * 
-	 * @param player
+	 * @param player gets the cells that the player's ship occupies
 	 * @return an array where the 1st is the ship, the second is the row than
 	 *         column.
 	 */
@@ -411,7 +399,6 @@ public class BattleshipModel implements IBattleshipModel {
 	 * Sets board state so that game may begin anew
 	 */
 	public void reset() {
-		int[][][] test = new int[2][10][10];
 		this.offenseBoards = new OffensiveTileStatus[2][10][10];
 		for (int i = 0; i < 2; i++) {
 			for (int ii = 0; ii < 10; ii++) {
@@ -428,8 +415,8 @@ public class BattleshipModel implements IBattleshipModel {
 				}
 			}
 		}
-		this.playerOneShips = new ArrayList<IShip>();
-		this.playerTwoShips = new ArrayList<IShip>();
+		this.playerOneShips = new ArrayList<>();
+		this.playerTwoShips = new ArrayList<>();
 		this.isInPlayMode = false;
 	}
 }

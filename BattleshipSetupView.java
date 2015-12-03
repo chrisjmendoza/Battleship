@@ -10,13 +10,8 @@ import java.util.Scanner;
  */
 
 /**
- * Allows a player to place their fleet Asks for input on ship location and
- * sends
- * 
- * @param player
- *            set to true to setup for player 1 and false for player 2
- * @param model
- *            pass the model the setup is to interact with
+ * Allows a player to place their fleet. Asks for input on ship location
+ *
  */
 class BattleshipSetupView {
 
@@ -28,6 +23,10 @@ class BattleshipSetupView {
 		this.model = model;
 	}
 
+    /**
+     * Runs through the setup phase for the current player to set up their board
+     * @param player the current player setting up their board
+     */
 	public void collectDataForPlayer(boolean player) {
 		System.out.println("");
 		System.out.println("");
@@ -50,7 +49,7 @@ class BattleshipSetupView {
 				s = new Ship(toPlace[shipNum], origin, direction);
 			} while (!s.isValidShipValues()
 					|| !model.isValidShipPlacement(s, player));
-			// Place the ship and
+			// Place the ship and print the board
 			model.placeShip(s, player);
 			printBoard(player);
 		}
@@ -60,10 +59,8 @@ class BattleshipSetupView {
 	 * Consults with the model to find out which direction the ship is facing
 	 * and at what angle.
 	 * 
-	 * @param shipName
-	 *            Name of the ship being set.
-	 * @param length
-	 *            Length of the ship being set.
+	 * @param ship
+	 *            The ship object being passed
 	 * @return Returns a Direction enum.
 	 * 
 	 */
@@ -77,33 +74,43 @@ class BattleshipSetupView {
 					+ "? (Example: N, NE, E, SE, S, SW, W, NW) ");
 			in = input.nextLine();
 			in = (in == null ? "" : in).toUpperCase().trim();
-			if (in.equals("N")) {
-				direction = Direction.N;
-				validInput = true;
-			} else if (in.equals("NE")) {
-				direction = Direction.NE;
-				validInput = true;
-			} else if (in.equals("E")) {
-				direction = Direction.E;
-				validInput = true;
-			} else if (in.equals("SE")) {
-				direction = Direction.SE;
-				validInput = true;
-			} else if (in.equals("S")) {
-				direction = Direction.S;
-				validInput = true;
-			} else if (in.equals("SW")) {
-				direction = Direction.SW;
-				validInput = true;
-			} else if (in.equals("W")) {
-				direction = Direction.W;
-				validInput = true;
-			} else if (in.equals("NW")) {
-				direction = Direction.NW;
-				validInput = true;
-			} else {
-				System.out.println("Invalid direction try again.");
-			}
+            switch (in) {
+                case "N":
+                    direction = Direction.N;
+                    validInput = true;
+                    break;
+                case "NE":
+                    direction = Direction.NE;
+                    validInput = true;
+                    break;
+                case "E":
+                    direction = Direction.E;
+                    validInput = true;
+                    break;
+                case "SE":
+                    direction = Direction.SE;
+                    validInput = true;
+                    break;
+                case "S":
+                    direction = Direction.S;
+                    validInput = true;
+                    break;
+                case "SW":
+                    direction = Direction.SW;
+                    validInput = true;
+                    break;
+                case "W":
+                    direction = Direction.W;
+                    validInput = true;
+                    break;
+                case "NW":
+                    direction = Direction.NW;
+                    validInput = true;
+                    break;
+                default:
+                    System.out.println("Invalid direction try again.");
+                    break;
+            }
 		}
 		return direction;
 	}
@@ -112,10 +119,8 @@ class BattleshipSetupView {
 	 * Consults with the model to find out where the ship is positioned on the
 	 * board.
 	 * 
-	 * @param shipName
-	 *            Name of the ship being set.
-	 * @param length
-	 *            Length of the ship being set.
+	 * @param ship
+	 *            The ship object being passed to the player for placement
 	 * @return Returns a String example: "B9" translating to the position of the
 	 *         ship.
 	 */

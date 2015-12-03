@@ -61,7 +61,7 @@
   	 * @param ship the type of ship being placed, used to test validity of input
  	 * @param player true for player 1, false for player 2
  	 * @throws IllegalStateException is not in setup mode
- 	 * @returns true if placement is valid
+ 	 * @return true if placement is valid
  	 */
 	boolean isValidShipPlacement(IShip ship, boolean player);
  	
@@ -90,8 +90,7 @@
  	
  	/**
  	 * Checks if the current players turn is that of player one.
- 	 * @return true if the active turn is player 1.
- 	 * @return false if the active turn is player 2.
+ 	 * @return true if the active turn is player 1. false if the active turn is player 2.
  	 * @throws IllegalStateException if not in play mode or game is over
  	 */
 	boolean isPlayerTurn();

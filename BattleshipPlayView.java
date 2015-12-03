@@ -163,7 +163,7 @@ class BattleshipPlayView {
 	}
 
 	/**
-	 * Asks for the shot
+	 * Asks for the shot from the current player
 	 */
 	public void askForFireShot() {
 		boolean attack = true;
@@ -184,7 +184,7 @@ class BattleshipPlayView {
 																		// not
 																		// case
 																		// sensitive.
-			if (Pattern.matches("^[A-J]{1}(10|[1-9]){1}$", place)) {
+			if (Pattern.matches("^[A-J](10|[1-9])$", place)) {
 				row = place.charAt(0);
 				column = Integer.parseInt(place.substring(1));
 				if (model.isValidAttackLocation(column, row)) {

@@ -24,7 +24,7 @@ public class Ship implements IShip {
 	 *            The type of ship (eg destroyer, etc)
 	 * @param origin
 	 *            The starting grid point of the ship
-	 * @param direction
+	 * @param dir
 	 *            The direction the ship is facing from the origin
 	 */
 	public Ship(ShipType type, String origin, Direction dir) {
@@ -97,6 +97,6 @@ public class Ship implements IShip {
 	}
 
 	public boolean isValidShipValues() {
-		return Pattern.matches("^[A-J]{1}(10|[1-9]){1}$", this.getOrigin());
+		return Pattern.matches("^[A-J](10|[1-9])$", this.getOrigin());
 	}
 }
