@@ -72,7 +72,7 @@ class BattleshipPlayView {
 		OffensiveTileStatus[][] offense = model.getOffensiveBoard(player);
 		DefenseTileStatus[][] defense = model.getDefenseBoard(player);
 		//Prints Offense board
-		System.out.println("\n\nEnemy's Fleet\n");
+		System.out.println("\n\nPlayer " + (player ? "1" : "2") + "'s Offensive Grid\n");
 		for(int i = 0; i < 10; i++) {
 			System.out.print("  ");
 			for(int j = 0; j < 10; j++) {
@@ -116,7 +116,7 @@ class BattleshipPlayView {
 		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
 		
 		//Prints Defense board
-		System.out.println("\n\nYour Fleet\n");
+		System.out.println("\n\nPlayer " + (player ? "1" : "2") + "'s Defensive Grid\n");
 		for(int i = 0; i < 10; i++) {
 			System.out.print("  ");
 			for(int j = 0; j < 10; j++) {
