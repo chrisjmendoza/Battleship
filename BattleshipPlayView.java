@@ -192,12 +192,30 @@ class BattleshipPlayView {
 							+ column);
 					FireResult fireResult = model.attackLocation(column, row);
 					if (FireResult.MISS != fireResult) {
-						System.out.println("Enemy ship hit!");
+						System.out.println("Hit!");
 						// check if ship sunk and print appropriate message
 						if (FireResult.HIT != fireResult) {
-							System.out.println("You sunk a ship!");
+							// exit the method now that the game is over.
+							if (fireResult == FireResult.SUNK_AIRCRAFT_CARRIER) {
+								System.out.println("Admiral "
+										+ (!model.isPlayerTurn() ? "1" : "2")
+										+ " says: Hit.. You sunk a my Carrier!");
+							} else if (fireResult == FireResult.SUNK_BATTLESHIP) {
+								System.out.println("Admiral "
+										+ (!model.isPlayerTurn() ? "1" : "2")
+										+ " says: Hit.. You sunk a my Battleship!");
+							} else if (fireResult == FireResult.SUNK_CRUISER) {
+								System.out.println("Admiral "
+										+ (!model.isPlayerTurn() ? "1" : "2")
+										+ " says: Hit.. You sunk a my Cruiser!");
+							} else if (fireResult == FireResult.SUNK_DESTROYER) {
+								System.out
+										.println("Admiral "
+												+ (!model.isPlayerTurn() ? "1"
+														: "2")
+												+ " says: Hit.. You sunk a my Destroyer!");
+							}
 							if (model.isGameOver()) {
-								// exit the method now that the game is over.
 								return;
 							}
 						}
