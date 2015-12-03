@@ -133,7 +133,7 @@ public class BattleshipModel implements IBattleshipModel {
 	 * 
 	 * @param ship
 	 *            the type of ship being placed, used to test validity of input
-	 * @player true for player 1, false for player 2
+	 * @param player true for player 1, false for player 2
 	 * @throws IllegalStateException
 	 *             is not in setup mode
 	 * @returns true if placement is valid
