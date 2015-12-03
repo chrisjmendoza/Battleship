@@ -192,7 +192,6 @@ class BattleshipPlayView {
 							+ column);
 					FireResult fireResult = model.attackLocation(column, row);
 					if (FireResult.MISS != fireResult) {
-						System.out.println("Hit!");
 						// check if ship sunk and print appropriate message
 						if (FireResult.HIT != fireResult) {
 							// exit the method now that the game is over.
@@ -218,6 +217,8 @@ class BattleshipPlayView {
 							if (model.isGameOver()) {
 								return;
 							}
+						} else {
+							System.out.println("Hit!");
 						}
 					} else {
 						System.out.println("The attack was a miss...");
