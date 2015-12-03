@@ -61,7 +61,7 @@ class BattleshipPlayView {
 	 */
 	public BattleshipPlayView(BattleshipModel model) {
 		this.model = model;
-		input = new Scanner(System.in); // scanner wow!!
+		input = new Scanner(System.in); 
 	}
 	
 	/**
@@ -170,14 +170,19 @@ class BattleshipPlayView {
 		while(attack) {
 			System.out.println("Admiral Player " + player + ", where shall we attack: ");
 			String place = input.nextLine();
+			place = place == null ? "" : place.toUpperCase().trim(); //make the response not case sensitive.
 			if(Pattern.matches("^[A-J]{1}(10|[1-9]){1}$", place)) {
 				row = place.charAt(0);
 				column = Integer.parseInt(place.substring(1));
 				if(model.isValidAttackLocation(column, row)) {
 					System.out.println("Attacking row " + row + ", column " + column);
-					if(FireResult.HIT == model.attackLocation(column, row)) {
+					FireResult fireResult = model.attackLocation(column, row);
+					if(FireResult.MISS != fireResult) {
 						System.out.println("Enemy ship hit!");
 						//check if ship sunk and print appropriate message
+						if(FireResult.HIT != fireResult) {
+							System.out.println("You sunk a ship!");
+						}
 					} else {
 						System.out.println("The attack was a miss...");
 					}
