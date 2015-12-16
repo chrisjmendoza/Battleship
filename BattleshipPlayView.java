@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 class BattleshipPlayView {
 	private BattleshipModel model;
 	Scanner input;
+	private int boardSize;
+	private String regexPattern;
 
 	/**
 	 * Runs a game of Battleship and prompts user to play again
@@ -63,7 +65,9 @@ class BattleshipPlayView {
 	 * @param model
 	 *            the model that the view and controller interact with
 	 */
-	public BattleshipPlayView(BattleshipModel model) {
+	public BattleshipPlayView(BattleshipModel model, int boardSize) {
+		this.boardSize = boardSize;
+		regexPattern = "^[A-" + ('A' + (boardSize - 1)) + "](" + boardSize + "|[1-" + (boardSize - 1) + "])$";
 		this.model = model;
 		input = new Scanner(System.in);
 	}
@@ -80,13 +84,13 @@ class BattleshipPlayView {
 		// Prints Offense board
 		System.out.println("\n\nPlayer " + (player ? "1" : "2")
 				+ "'s Offensive Grid\n");
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			System.out.print("  ");
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				System.out.print("+---");
 			}
 			System.out.println("+");
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				String tile = " ";
 				switch (offense[i][j]) {
 				case UNKNOWN:
@@ -119,19 +123,28 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
-		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
+		for (int j = 0; j < boardSize; j++) {
+			System.out.print("+---");
+		}
+		System.out.println("+");
+		for(int i = 1; i <= boardSize; i++) {
+			if(i < 10) {
+				System.out.print(" " + i + "  ");
+			} else {
+				System.out.print(" " + i + " ");
+			}
+		}
 
 		// Prints Defense board
 		System.out.println("\n\nPlayer " + (player ? "1" : "2")
 				+ "'s Defensive Grid\n");
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			System.out.print("  ");
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				System.out.print("+---");
 			}
 			System.out.println("+");
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				String tile = "";
 				switch (defense[i][j]) {
 				case OCEAN:
@@ -158,8 +171,17 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
-		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
+		for (int j = 0; j < boardSize; j++) {
+			System.out.print("+---");
+		}
+		System.out.println("+");
+		for(int i = 1; i <= boardSize; i++) {
+			if(i < 10) {
+				System.out.print(" " + i + "  ");
+			} else {
+				System.out.print(" " + i + " ");
+			}
+		}
 	}
 
 	/**
@@ -184,7 +206,7 @@ class BattleshipPlayView {
 																		// not
 																		// case
 																		// sensitive.
-			if (Pattern.matches("^[A-J](10|[1-9])$", place)) {
+			if (Pattern.matches(regexPattern, place)) {
 				row = place.charAt(0);
 				column = Integer.parseInt(place.substring(1));
 				if (model.isValidAttackLocation(column, row)) {
