@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 class BattleshipPlayView {
 	private BattleshipModel model;
 	Scanner input;
-	private int boardSize;
 	private String regexPattern;
 
 	/**
@@ -65,9 +64,15 @@ class BattleshipPlayView {
 	 * @param model
 	 *            the model that the view and controller interact with
 	 */
-	public BattleshipPlayView(BattleshipModel model, int boardSize) {
-		this.boardSize = boardSize;
-		regexPattern = "^[A-" + ('A' + (boardSize - 1)) + "](" + boardSize + "|[1-" + (boardSize - 1) + "])$";
+	public BattleshipPlayView(BattleshipModel model) {
+		if (model.getBoardSize() < 10) {
+			regexPattern = "^[A-" + String.valueOf(Character.toChars('A' + (model.getBoardSize() - 1))) + "]([1-" + model.getBoardSize()
+					+ "])$";
+		} else if (model.getBoardSize() == 10) {
+			// Note: Does not support a board size greater than 10
+			regexPattern = "^[A-J](10|[1-9])$";
+		}
+		System.out.println("regex: " + regexPattern);
 		this.model = model;
 		input = new Scanner(System.in);
 	}
@@ -84,13 +89,13 @@ class BattleshipPlayView {
 		// Prints Offense board
 		System.out.println("\n\nPlayer " + (player ? "1" : "2")
 				+ "'s Offensive Grid\n");
-		for (int i = 0; i < boardSize; i++) {
+		for (int i = 0; i < model.getBoardSize(); i++) {
 			System.out.print("  ");
-			for (int j = 0; j < boardSize; j++) {
+			for (int j = 0; j < model.getBoardSize(); j++) {
 				System.out.print("+---");
 			}
 			System.out.println("+");
-			for (int j = 0; j < boardSize; j++) {
+			for (int j = 0; j < model.getBoardSize(); j++) {
 				String tile = " ";
 				switch (offense[i][j]) {
 				case UNKNOWN:
@@ -123,12 +128,12 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
-		for (int j = 0; j < boardSize; j++) {
+		for (int j = 0; j < model.getBoardSize(); j++) {
 			System.out.print("+---");
 		}
 		System.out.println("+");
-		for(int i = 1; i <= boardSize; i++) {
-			if(i < 10) {
+		for (int i = 1; i <= model.getBoardSize(); i++) {
+			if (i < 10) {
 				System.out.print(" " + i + "  ");
 			} else {
 				System.out.print(" " + i + " ");
@@ -138,13 +143,13 @@ class BattleshipPlayView {
 		// Prints Defense board
 		System.out.println("\n\nPlayer " + (player ? "1" : "2")
 				+ "'s Defensive Grid\n");
-		for (int i = 0; i < boardSize; i++) {
+		for (int i = 0; i < model.getBoardSize(); i++) {
 			System.out.print("  ");
-			for (int j = 0; j < boardSize; j++) {
+			for (int j = 0; j < model.getBoardSize(); j++) {
 				System.out.print("+---");
 			}
 			System.out.println("+");
-			for (int j = 0; j < boardSize; j++) {
+			for (int j = 0; j < model.getBoardSize(); j++) {
 				String tile = "";
 				switch (defense[i][j]) {
 				case OCEAN:
@@ -171,17 +176,20 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
-		for (int j = 0; j < boardSize; j++) {
+		System.out.print("  ");
+		for (int j = 0; j < model.getBoardSize(); j++) {
 			System.out.print("+---");
 		}
 		System.out.println("+");
-		for(int i = 1; i <= boardSize; i++) {
-			if(i < 10) {
+		System.out.print("   ");
+		for (int i = 1; i <= model.getBoardSize(); i++) {
+			if (i < 10) {
 				System.out.print(" " + i + "  ");
 			} else {
 				System.out.print(" " + i + " ");
 			}
 		}
+		System.out.println("");
 	}
 
 	/**
@@ -218,17 +226,23 @@ class BattleshipPlayView {
 						if (FireResult.HIT != fireResult) {
 							// exit the method now that the game is over.
 							if (fireResult == FireResult.SUNK_AIRCRAFT_CARRIER) {
-								System.out.println("Admiral "
-										+ (!model.isPlayerTurn() ? "1" : "2")
-										+ " says: Hit.. You sunk a my Carrier!");
+								System.out
+										.println("Admiral "
+												+ (!model.isPlayerTurn() ? "1"
+														: "2")
+												+ " says: Hit.. You sunk a my Carrier!");
 							} else if (fireResult == FireResult.SUNK_BATTLESHIP) {
-								System.out.println("Admiral "
-										+ (!model.isPlayerTurn() ? "1" : "2")
-										+ " says: Hit.. You sunk a my Battleship!");
+								System.out
+										.println("Admiral "
+												+ (!model.isPlayerTurn() ? "1"
+														: "2")
+												+ " says: Hit.. You sunk a my Battleship!");
 							} else if (fireResult == FireResult.SUNK_CRUISER) {
-								System.out.println("Admiral "
-										+ (!model.isPlayerTurn() ? "1" : "2")
-										+ " says: Hit.. You sunk a my Cruiser!");
+								System.out
+										.println("Admiral "
+												+ (!model.isPlayerTurn() ? "1"
+														: "2")
+												+ " says: Hit.. You sunk a my Cruiser!");
 							} else if (fireResult == FireResult.SUNK_DESTROYER) {
 								System.out
 										.println("Admiral "

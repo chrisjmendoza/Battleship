@@ -17,12 +17,10 @@ class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
-	private int boardSize;
 	//set to true to allow diagonal placement and false otherwise
 	private boolean allowDiagonal;
 	
-	public BattleshipSetupView(BattleshipModel model, int boardSize, boolean allowDiagonal) {
-		this.boardSize = boardSize;
+	public BattleshipSetupView(BattleshipModel model, boolean allowDiagonal) {
 		this.allowDiagonal = allowDiagonal;
 		input = new Scanner(System.in);
 		this.model = model;
@@ -179,9 +177,13 @@ class BattleshipSetupView {
 		System.out.println(" N ");
 		System.out.println("W+E");
 		System.out.println(" S ");
-		for (int i = 0; i < boardSize; i++) {
-			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-			for (int j = 0; j < boardSize; j++) {
+		for (int i = 0; i < model.getBoardSize(); i++) {
+			System.out.print("  ");
+			for (int j = 0; j < model.getBoardSize(); j++) {
+				System.out.print("+---");
+			}
+			System.out.println("+");
+			for (int j = 0; j < model.getBoardSize(); j++) {
 				String tile = "";
 				switch (defense[i][j]) {
 				case OCEAN:
@@ -208,7 +210,19 @@ class BattleshipSetupView {
 			}
 			System.out.println("|");
 		}
-		System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-		System.out.println("    1   2   3   4   5   6   7   8   9   10 ");
+		System.out.print("  ");
+		for (int j = 0; j < model.getBoardSize(); j++) {
+			System.out.print("+---");
+		}
+		System.out.println("+");
+		System.out.print("   ");
+		for(int i = 1; i <= model.getBoardSize(); i++) {
+			if(i < 10) {
+				System.out.print(" " + i + "  ");
+			} else {
+				System.out.print(" " + i + " ");
+			}
+		}
+		System.out.println("");
 	}
 }

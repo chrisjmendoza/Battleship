@@ -39,6 +39,14 @@ public class BattleshipModel implements IBattleshipModel {
 	 */
 	private int boardSize;
 	
+	/**
+	 * Gets the current board size
+	 * @return
+	 */
+	public int getBoardSize() {
+		return this.boardSize;
+	}
+	
 	//set to true if players switch every turn, false if players attack again after a hit
 	private boolean switchPlayer;
 	

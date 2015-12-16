@@ -11,12 +11,16 @@ import java.util.ArrayList;
  */
 class BattleshipKicker {
 	public static void main(String[] args) {
-
-		BattleshipModel model = new BattleshipModel();
-		BattleshipSetupView setup = new BattleshipSetupView(model);
+		int boardSize = 10;
+		boolean switchPlayer = false;
+		boolean allowDiagonal = false;
+		
+		
+		BattleshipModel model = new BattleshipModel(boardSize,switchPlayer );
+		BattleshipSetupView setup = new BattleshipSetupView(model, allowDiagonal);
 		BattleshipPlayView play = new BattleshipPlayView(model);
 
-		System.out.println("Welcome to Battleship!");
+		System.out.println("Welcome to Battleship (V 2)!");
 		System.out
 				.println("Created by: Casey Riggin, Christopher Mendoza, Peter Kim, Sai Chang");
 		System.out.println("AKA: Team Rocket.");
