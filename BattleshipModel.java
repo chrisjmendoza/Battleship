@@ -35,9 +35,19 @@ public class BattleshipModel implements IBattleshipModel {
 	private boolean currentPlayersTurn;
 
 	/**
+	 * stores board size
+	 */
+	private int boardSize;
+	
+	//set to true if players switch every turn, false if players attack again after a hit
+	private boolean switchPlayer;
+	
+	/**
 	 * Public Constructor gives you a fresh and new board.
 	 */
-	public BattleshipModel() {
+	public BattleshipModel(int boardSize, boolean switchPlayer) {
+		this.switchPlayer = switchPlayer;
+		this.boardSize = boardSize;
 		this.reset();
 	}
 
@@ -160,7 +170,7 @@ public class BattleshipModel implements IBattleshipModel {
 		for (String cell : ship.getConsumingCells()) {
 			int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 			int col = Integer.parseInt(cell.substring(1)) - 1;
-			if (row < 0 || row > 9 || col < 0 || col > 10) {
+			if (row < 0 || row > (boardSize - 1) || col < 0 || col > boardSize) {
 				// Check that all parts of the ship are on the board
 				return false;
 			} else if (getDefenseBoard(player)[row][col] != DefenseTileStatus.OCEAN) {
@@ -233,6 +243,13 @@ public class BattleshipModel implements IBattleshipModel {
 				return FireResult.MISS;
 			} else { // this is where it gets hard...
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.HIT_SHIP;
+				
+				/**
+				 * TEST TO MAKE SURE THIS WORKS
+				 */
+				if(switchPlayer && !isGameOver()) {
+					currentPlayersTurn = !currentPlayersTurn;
+				}
 
 				// Check to see if the hit was the last of a known ship
 				for (int i = 0; i < playerOneShips.size(); i++) {
@@ -399,18 +416,18 @@ public class BattleshipModel implements IBattleshipModel {
 	 * Sets board state so that game may begin anew
 	 */
 	public void reset() {
-		this.offenseBoards = new OffensiveTileStatus[2][10][10];
+		this.offenseBoards = new OffensiveTileStatus[2][boardSize][boardSize];
 		for (int i = 0; i < 2; i++) {
-			for (int ii = 0; ii < 10; ii++) {
-				for (int iii = 0; iii < 10; iii++) {
+			for (int ii = 0; ii < boardSize; ii++) {
+				for (int iii = 0; iii < boardSize; iii++) {
 					this.offenseBoards[i][ii][iii] = OffensiveTileStatus.UNKNOWN;
 				}
 			}
 		}
-		this.defenseBoards = new DefenseTileStatus[2][10][10];
+		this.defenseBoards = new DefenseTileStatus[2][boardSize][boardSize];
 		for (int i = 0; i < 2; i++) {
-			for (int ii = 0; ii < 10; ii++) {
-				for (int iii = 0; iii < 10; iii++) {
+			for (int ii = 0; ii < boardSize; ii++) {
+				for (int iii = 0; iii < boardSize; iii++) {
 					this.defenseBoards[i][ii][iii] = DefenseTileStatus.OCEAN;
 				}
 			}
