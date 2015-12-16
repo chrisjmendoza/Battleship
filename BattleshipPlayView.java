@@ -22,7 +22,6 @@ import java.util.regex.Pattern;
 class BattleshipPlayView {
 	private BattleshipModel model;
 	Scanner input;
-	private String regexPattern;
 
 	/**
 	 * Runs a game of Battleship and prompts user to play again
@@ -42,7 +41,7 @@ class BattleshipPlayView {
 
 		boolean askPrompt = true;
 		while (askPrompt) {
-			System.out.println("playAgain? y/n ");
+			System.out.println("Play Again? y/n ");
 			String yes = input.nextLine();
 			if (yes.equalsIgnoreCase("n")) {
 				playAgain = false;
@@ -65,14 +64,6 @@ class BattleshipPlayView {
 	 *            the model that the view and controller interact with
 	 */
 	public BattleshipPlayView(BattleshipModel model) {
-		if (model.getBoardSize() < 10) {
-			regexPattern = "^[A-" + String.valueOf(Character.toChars('A' + (model.getBoardSize() - 1))) + "]([1-" + model.getBoardSize()
-					+ "])$";
-		} else if (model.getBoardSize() == 10) {
-			// Note: Does not support a board size greater than 10
-			regexPattern = "^[A-J](10|[1-9])$";
-		}
-		System.out.println("regex: " + regexPattern);
 		this.model = model;
 		input = new Scanner(System.in);
 	}
@@ -107,17 +98,10 @@ class BattleshipPlayView {
 				case HIT_SHIP:
 					tile = "X";
 					break;
-				case SUNK_DESTROYER:
-					tile = "D";
-					break;
-				case SUNK_CRUISER:
-					tile = "C";
-					break;
-				case SUNK_BATTLESHIP:
-					tile = "B";
-					break;
-				case SUNK_CARRIER:
-					tile = "A";
+				case SUNK_SHIP:
+					tile = ""
+							+ model.getShipTypeAtCell(i, j, !player)
+									.getShipChar();
 					break;
 				}
 				if (j == 0) {
@@ -128,10 +112,12 @@ class BattleshipPlayView {
 			}
 			System.out.println("|");
 		}
+		System.out.print("  ");
 		for (int j = 0; j < model.getBoardSize(); j++) {
 			System.out.print("+---");
 		}
 		System.out.println("+");
+		System.out.print("   ");
 		for (int i = 1; i <= model.getBoardSize(); i++) {
 			if (i < 10) {
 				System.out.print(" " + i + "  ");
@@ -155,17 +141,10 @@ class BattleshipPlayView {
 				case OCEAN:
 					tile = "~";
 					break;
-				case SHIP_DESTROYER:
-					tile = "D";
-					break;
-				case SHIP_CRUISER:
-					tile = "C";
-					break;
-				case SHIP_BATTLESHIP:
-					tile = "B";
-					break;
-				case SHIP_CARRIER:
-					tile = "A";
+				case SHIP:
+					tile = ""
+							+ model.getShipTypeAtCell(i, j, player)
+									.getShipChar();
 					break;
 				}
 				if (j == 0) {
@@ -214,7 +193,7 @@ class BattleshipPlayView {
 																		// not
 																		// case
 																		// sensitive.
-			if (Pattern.matches(regexPattern, place)) {
+			if (Pattern.matches(model.getRegexPattern(), place)) {
 				row = place.charAt(0);
 				column = Integer.parseInt(place.substring(1));
 				if (model.isValidAttackLocation(column, row)) {
@@ -225,31 +204,15 @@ class BattleshipPlayView {
 						// check if ship sunk and print appropriate message
 						if (FireResult.HIT != fireResult) {
 							// exit the method now that the game is over.
-							if (fireResult == FireResult.SUNK_AIRCRAFT_CARRIER) {
-								System.out
-										.println("Admiral "
-												+ (!model.isPlayerTurn() ? "1"
-														: "2")
-												+ " says: Hit.. You sunk a my Carrier!");
-							} else if (fireResult == FireResult.SUNK_BATTLESHIP) {
-								System.out
-										.println("Admiral "
-												+ (!model.isPlayerTurn() ? "1"
-														: "2")
-												+ " says: Hit.. You sunk a my Battleship!");
-							} else if (fireResult == FireResult.SUNK_CRUISER) {
-								System.out
-										.println("Admiral "
-												+ (!model.isPlayerTurn() ? "1"
-														: "2")
-												+ " says: Hit.. You sunk a my Cruiser!");
-							} else if (fireResult == FireResult.SUNK_DESTROYER) {
-								System.out
-										.println("Admiral "
-												+ (!model.isPlayerTurn() ? "1"
-														: "2")
-												+ " says: Hit.. You sunk a my Destroyer!");
-							}
+							// Figure out what kind of ship is at the given
+							// location and get its name
+							String shipName = model.getShipTypeAtCell(
+									("" + row).toUpperCase().charAt(0) - 'A',
+									column - 1, player != 1).getShipName();
+							System.out.println("Admiral "
+									+ (!model.isPlayerTurn() ? "1" : "2")
+									+ " says: Hit.. You sunk a my " + shipName
+									+ "!");
 							if (model.isGameOver()) {
 								return;
 							}

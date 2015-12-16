@@ -38,25 +38,68 @@ public class BattleshipModel implements IBattleshipModel {
 	 * stores board size
 	 */
 	private int boardSize;
-	
+
+	/**
+	 * The regular expression for which cells should be accepted as valid input
+	 */
+	private String regexPattern;
+
+	/**
+	 * The ship types that are allowed to be placed
+	 */
+	private ShipType[] allowedTypes;
+
+	/**
+	 * Returns the ship types that are allowed for the given board
+	 * 
+	 * @return
+	 */
+	public ShipType[] getAllowedTypes() {
+		return this.allowedTypes;
+	}
+
 	/**
 	 * Gets the current board size
+	 * 
 	 * @return
 	 */
 	public int getBoardSize() {
 		return this.boardSize;
 	}
-	
-	//set to true if players switch every turn, false if players attack again after a hit
+
+	/**
+	 * Gets the current valid regex pattern for what is valid input for a cell
+	 * on the board.
+	 * 
+	 * @return
+	 */
+	public String getRegexPattern() {
+		return this.regexPattern;
+	}
+
+	// set to true if players switch every turn, false if players attack again
+	// after a hit
 	private boolean switchPlayer;
-	
+
 	/**
 	 * Public Constructor gives you a fresh and new board.
 	 */
-	public BattleshipModel(int boardSize, boolean switchPlayer) {
+	public BattleshipModel(int boardSize, boolean switchPlayer,
+			ShipType[] allowedTypes) {
 		this.switchPlayer = switchPlayer;
 		this.boardSize = boardSize;
+		this.allowedTypes = allowedTypes;
 		this.reset();
+
+		if (this.getBoardSize() < 10) {
+			regexPattern = "^[A-"
+					+ String.valueOf(Character.toChars('A' + (this
+							.getBoardSize() - 1))) + "]([1-"
+					+ this.getBoardSize() + "])$";
+		} else if (this.getBoardSize() == 10) {
+			// Note: Does not support a board size greater than 10
+			regexPattern = "^[A-J](10|[1-9])$";
+		}
 	}
 
 	@Override
@@ -67,6 +110,28 @@ public class BattleshipModel implements IBattleshipModel {
 	@Override
 	public boolean isInPlayMode() {
 		return this.isInPlayMode;
+	}
+
+	/**
+	 * 
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public ShipType getShipTypeAtCell(int in_row, int in_col, boolean player) {
+
+		for (IShip s : (player ? this.playerOneShips : this.playerTwoShips)) {
+			for (String cell : s.getConsumingCells()) {
+				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
+				int col = Integer.parseInt(cell.substring(1)) - 1;
+				if (row == in_row && col == in_col) {
+					return s.getShipType();
+				}
+			}
+		}
+		System.out.println("in row: " + in_row);
+		System.out.println("in col: " + in_col);
+		return null;
 	}
 
 	/**
@@ -96,13 +161,14 @@ public class BattleshipModel implements IBattleshipModel {
 	 * @return true/false if all ships have been placed for the given player
 	 */
 	public boolean areAllShipsPlaced(boolean player) {
+
 		// since only valid ships can be placed, you can
 		// assume that if the count of ships is five, that all ships have been
 		// placed.
 		ArrayList<IShip> ships = player ? this.playerOneShips
 				: this.playerTwoShips;
-		System.out.println("Amount of Ships: " + ships.size());
-		return ships.size() == 5;
+		return ships.size() == this.getAllowedTypes().length;
+
 	}
 
 	/**
@@ -125,16 +191,10 @@ public class BattleshipModel implements IBattleshipModel {
 			throw new IllegalArgumentException("Not a valid ship placement");
 
 		} else {
-			ShipType shipType = ship.getShipType();
-			DefenseTileStatus newTileType = ShipType.DESTROYER == shipType ? DefenseTileStatus.SHIP_DESTROYER
-					: ShipType.CRUISER == shipType ? DefenseTileStatus.SHIP_CRUISER
-							: ShipType.BATTLESHIP == shipType ? DefenseTileStatus.SHIP_BATTLESHIP
-									: DefenseTileStatus.SHIP_CARRIER;
-
 			for (String cell : ship.getConsumingCells()) {
 				int row = (((int) cell.toLowerCase().toCharArray()[0]) - 'a');
 				int col = Integer.parseInt(cell.substring(1)) - 1;
-				getDefenseBoard(player)[row][col] = newTileType;
+				getDefenseBoard(player)[row][col] = DefenseTileStatus.SHIP;
 			}
 
 			// Add the ship to the existing ships
@@ -151,26 +211,13 @@ public class BattleshipModel implements IBattleshipModel {
 	 * 
 	 * @param ship
 	 *            the type of ship being placed, used to test validity of input
-	 * @param player true for player 1, false for player 2
+	 * @param player
+	 *            true for player 1, false for player 2
 	 * @throws IllegalStateException
 	 *             is not in setup mode
 	 * @return true if placement is valid
 	 */
 	public boolean isValidShipPlacement(IShip ship, boolean player) {
-		// Check that allowed of that ship type have not already been placed.
-		ArrayList<IShip> sPointer = (player ? this.playerOneShips
-				: this.playerTwoShips);
-		int shipCount = 0;
-		for (int i = 0; i < sPointer.size(); i++) {
-			if (sPointer.get(i).getShipType() == ship.getShipType()) {
-				shipCount++;
-			}
-		}
-
-		int maxAllowed = ship.getShipType() == ShipType.DESTROYER ? 2 : 1;
-		if (shipCount >= maxAllowed) {
-			return false;
-		}
 		int prevRow = (((int) ship.getConsumingCells()[0].toLowerCase()
 				.toCharArray()[0]) - 'a');
 		int prevCol = Integer
@@ -251,13 +298,13 @@ public class BattleshipModel implements IBattleshipModel {
 				return FireResult.MISS;
 			} else { // this is where it gets hard...
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.HIT_SHIP;
-				
+
 				/**
 				 * TEST TO MAKE SURE THIS WORKS
 				 */
-				if(switchPlayer && !isGameOver()) {
-					currentPlayersTurn = !currentPlayersTurn;
-				}
+				// if (switchPlayer && !isGameOver()) {
+				// currentPlayersTurn = !currentPlayersTurn;
+				// }
 
 				// Check to see if the hit was the last of a known ship
 				for (int i = 0; i < playerOneShips.size(); i++) {
@@ -277,33 +324,27 @@ public class BattleshipModel implements IBattleshipModel {
 						if (getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] == OffensiveTileStatus.UNKNOWN) {
 							currentShipSunk = false;
 						}
-						if (y == (tempRow + 1) && (tempCol + 1) == col) {
+						if (y == (tempRow) && (tempCol + 1) == col) {
 							currentShipWasFiredAtThisTurn = true;
 						}
 
 					}
+					
+				
 
 					if (currentShipSunk && currentShipWasFiredAtThisTurn) {
-
 						// set all cells to the sunk ship type
-						ShipType sunkType = currentShip.getShipType();
 						for (int ii = 0; ii < consumingCells.length; ii++) {
 							int tempRow = (((int) consumingCells[ii]
 									.toLowerCase().toCharArray()[0]) - 'a');
 							int tempCol = Integer.parseInt(consumingCells[ii]
 									.substring(1)) - 1;
-							getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] = sunkType == ShipType.AIRCRAFT_CARRIER ? OffensiveTileStatus.SUNK_CARRIER
-									: sunkType == ShipType.BATTLESHIP ? OffensiveTileStatus.SUNK_BATTLESHIP
-											: sunkType == ShipType.CRUISER ? OffensiveTileStatus.SUNK_CRUISER
-													: OffensiveTileStatus.SUNK_DESTROYER;
+							getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] = OffensiveTileStatus.SUNK_SHIP;
 
 						}
 
 						// figure out your return type.
-						return sunkType == ShipType.AIRCRAFT_CARRIER ? FireResult.SUNK_AIRCRAFT_CARRIER
-								: sunkType == ShipType.BATTLESHIP ? FireResult.SUNK_BATTLESHIP
-										: sunkType == ShipType.CRUISER ? FireResult.SUNK_CRUISER
-												: FireResult.SUNK_DESTROYER;
+						return FireResult.SUNK_SHIP;
 					}
 				}
 				return FireResult.HIT;
@@ -319,7 +360,8 @@ public class BattleshipModel implements IBattleshipModel {
 	/**
 	 * Checks if the current players turn is that of player one.
 	 * 
-	 * @return true if the active turn is player 1. false if the active turn is player 2.
+	 * @return true if the active turn is player 1. false if the active turn is
+	 *         player 2.
 	 */
 	public boolean isPlayerTurn() {
 		return this.currentPlayersTurn;
@@ -385,7 +427,8 @@ public class BattleshipModel implements IBattleshipModel {
 	 * Helper method is going to get the cells that each ship for a given player
 	 * is currently taking.
 	 * 
-	 * @param player gets the cells that the player's ship occupies
+	 * @param player
+	 *            gets the cells that the player's ship occupies
 	 * @return an array where the 1st is the ship, the second is the row than
 	 *         column.
 	 */

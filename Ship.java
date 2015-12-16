@@ -12,25 +12,25 @@ import java.util.regex.Pattern;
  */
 
 public class Ship implements IShip {
-
-	private ShipType type;
 	private Direction direction;
 	private String origin;
+	private String allowedRegex;
+	private ShipType shipType;
 
 	/**
 	 * Ship constructor
 	 * 
-	 * @param type
-	 *            The type of ship (eg destroyer, etc)
 	 * @param origin
 	 *            The starting grid point of the ship
 	 * @param dir
 	 *            The direction the ship is facing from the origin
 	 */
-	public Ship(ShipType type, String origin, Direction dir) {
-		this.type = type;
+	public Ship(String origin, Direction dir, String allowedRegex, ShipType shipType) {
 		this.direction = dir;
 		this.origin = (origin == null ? "" : origin).toUpperCase().trim();
+		this.allowedRegex = allowedRegex;
+		this.shipType = shipType;
+
 	}
 
 	/**
@@ -47,27 +47,26 @@ public class Ship implements IShip {
 		return this.direction;
 	}
 
+	public String getName() {
+		return this.shipType.getShipName();
+	}
 	
+	public char getShipChar() {
+		return this.shipType.getShipChar();
+	}
+	
+	/**
+	 * Returns the current ship type
+	 */
 	public ShipType getShipType() {
-		return this.type;
+		return this.shipType;
 	}
 
 	public String[] getConsumingCells() {
-		int length = 0;
-		if (this.type == ShipType.AIRCRAFT_CARRIER) {
-			length = 5;
-		} else if (this.type == ShipType.BATTLESHIP) {
-			length = 4;
-		} else if (this.type == ShipType.CRUISER) {
-			length = 3;
-		} else if (this.type == ShipType.DESTROYER) {
-			length = 2;
-		}
-
-		String[] consumedCells = new String[length];
+		String[] consumedCells = new String[shipType.getShipLength()];
 		int row = (((int) getOrigin().toUpperCase().toCharArray()[0]) - 'A');
 		int col = Integer.parseInt(getOrigin().substring(1));
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < shipType.getShipLength(); i++) {
 			if (i != 0) {
 				if (direction == Direction.N) {
 					row = row - 1;
@@ -91,12 +90,12 @@ public class Ship implements IShip {
 					row = row - 1;
 				}
 			}
-			consumedCells[i] = "" + (char)('A' + row) + Integer.toString(col);
+			consumedCells[i] = "" + (char) ('A' + row) + Integer.toString(col);
 		}
 		return consumedCells;
 	}
 
 	public boolean isValidShipValues() {
-		return Pattern.matches("^[A-J](10|[1-9])$", this.getOrigin());
+		return Pattern.matches(allowedRegex, this.getOrigin());
 	}
 }

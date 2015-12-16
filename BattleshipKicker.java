@@ -14,10 +14,12 @@ class BattleshipKicker {
 		int boardSize = 10;
 		boolean switchPlayer = false;
 		boolean allowDiagonal = false;
-		
-		
-		BattleshipModel model = new BattleshipModel(boardSize,switchPlayer );
-		BattleshipSetupView setup = new BattleshipSetupView(model, allowDiagonal);
+		String configText = "Battleship|5|B|2\nCruiser|3|C|1";
+		ShipType[] allowedShips = ShipType.parseFromConfig(configText);
+
+		BattleshipModel model = new BattleshipModel(boardSize, switchPlayer,allowedShips);
+		BattleshipSetupView setup = new BattleshipSetupView(model,
+				allowDiagonal);
 		BattleshipPlayView play = new BattleshipPlayView(model);
 
 		System.out.println("Welcome to Battleship (V 2)!");
@@ -33,16 +35,15 @@ class BattleshipKicker {
 		System.out.println("");
 		System.out.println("");
 
-		//Go through player one
+		// Go through player one
 
 		boolean playAgain = true;
-		while(playAgain) {
+		while (playAgain) {
 			setup.collectDataForPlayer(true);
 			setup.collectDataForPlayer(false);
 			playAgain = play.runGame();
 			model.reset();
 		}
 	}
-	
-	
+
 }

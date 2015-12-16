@@ -17,19 +17,21 @@ class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
-	//set to true to allow diagonal placement and false otherwise
+	// set to true to allow diagonal placement and false otherwise
 	private boolean allowDiagonal;
-	
+
 	public BattleshipSetupView(BattleshipModel model, boolean allowDiagonal) {
 		this.allowDiagonal = allowDiagonal;
 		input = new Scanner(System.in);
 		this.model = model;
 	}
 
-    /**
-     * Runs through the setup phase for the current player to set up their board
-     * @param player the current player setting up their board
-     */
+	/**
+	 * Runs through the setup phase for the current player to set up their board
+	 * 
+	 * @param player
+	 *            the current player setting up their board
+	 */
 	public void collectDataForPlayer(boolean player) {
 		System.out.println("");
 		System.out.println("");
@@ -37,19 +39,25 @@ class BattleshipSetupView {
 				+ (player ? 1 : 2) + "!");
 		System.out.println("Here's your empty board for reference:");
 		printBoard(player);
-		ShipType[] toPlace = new ShipType[] { ShipType.AIRCRAFT_CARRIER,
-				ShipType.BATTLESHIP, ShipType.CRUISER, ShipType.DESTROYER,
-				ShipType.DESTROYER };
-		for (int shipNum = 0; shipNum < toPlace.length; shipNum++) {
+
+		// DO THIS
+		// Figure out new abstraction for ships here
+
+
+
+		for (int shipNum = 0; shipNum < model.getAllowedTypes().length; shipNum++) {
 			Ship s = null;
 			do {
 				if (s != null) {
 					System.out.println("");
-					System.out.println("Invalid Ship Placement. Please try again. :(");
+					System.out
+							.println("Invalid Ship Placement. Please try again. :(");
 				}
-				String origin = getPosition(toPlace[shipNum]);
-				Direction direction = getDirection(toPlace[shipNum]);
-				s = new Ship(toPlace[shipNum], origin, direction);
+				String origin = getPosition(model.getAllowedTypes()[shipNum].getShipName());
+				Direction direction = getDirection(model.getAllowedTypes()[shipNum]
+						.getShipName());
+				s = new Ship(origin, direction, model.getRegexPattern(),
+						model.getAllowedTypes()[shipNum]);
 			} while (!s.isValidShipValues()
 					|| !model.isValidShipPlacement(s, player));
 			// Place the ship and print the board
@@ -67,80 +75,79 @@ class BattleshipSetupView {
 	 * @return Returns a Direction enum.
 	 * 
 	 */
-	public Direction getDirection(ShipType ship) {
+	public Direction getDirection(String shipName) {
 		boolean validInput = false;
 		Direction direction = null;
 		while (!validInput) {
 			String in;
-			if(allowDiagonal) {
-				System.out.print("What direction shall we place our "
-						+ ship.toString()
-						+ "? (Example: N, NE, E, SE, S, SW, W, NW) ");
+			if (allowDiagonal) {
+				System.out
+						.print("What direction shall we place our " + shipName
+								+ "? (Example: N, NE, E, SE, S, SW, W, NW) ");
 				in = input.nextLine();
 				in = (in == null ? "" : in).toUpperCase().trim();
 				switch (in) {
-					case "N":
-						direction = Direction.N;
-						validInput = true;
-						break;
-					case "NE":
-						direction = Direction.NE;
-						validInput = true;
-						break;
-					case "E":
-						direction = Direction.E;
-						validInput = true;
-						break;
-					case "SE":
-						direction = Direction.SE;
-						validInput = true;
-						break;
-					case "S":
-						direction = Direction.S;
-						validInput = true;
-						break;
-					case "SW":
-						direction = Direction.SW;
-						validInput = true;
-						break;
-					case "W":
-						direction = Direction.W;
-						validInput = true;
-						break;
-					case "NW":
-						direction = Direction.NW;
-						validInput = true;
-						break;
-					default:
-						System.out.println("Invalid direction try again.");
-						break;
+				case "N":
+					direction = Direction.N;
+					validInput = true;
+					break;
+				case "NE":
+					direction = Direction.NE;
+					validInput = true;
+					break;
+				case "E":
+					direction = Direction.E;
+					validInput = true;
+					break;
+				case "SE":
+					direction = Direction.SE;
+					validInput = true;
+					break;
+				case "S":
+					direction = Direction.S;
+					validInput = true;
+					break;
+				case "SW":
+					direction = Direction.SW;
+					validInput = true;
+					break;
+				case "W":
+					direction = Direction.W;
+					validInput = true;
+					break;
+				case "NW":
+					direction = Direction.NW;
+					validInput = true;
+					break;
+				default:
+					System.out.println("Invalid direction try again.");
+					break;
 				}
 			} else {
 				System.out.print("What direction shall we place our "
-						+ ship.toString()
-						+ "? (Example: N, E, S, W) ");
+						+ shipName + "? (Example: N, E, S, W) ");
 				in = input.nextLine();
 				in = (in == null ? "" : in).toUpperCase().trim();
 				switch (in) {
-					case "N":
-						direction = Direction.N;
-						validInput = true;
-						break;
-					case "E":
-						direction = Direction.E;
-						validInput = true;
-						break;
-					case "S":
-						direction = Direction.S;
-						validInput = true;
-						break;
-					case "W":
-						direction = Direction.W;
-						validInput = true;
-						break;
-					default:
-						System.out.println("Invalid direction try again.");
-						break;
+				case "N":
+					direction = Direction.N;
+					validInput = true;
+					break;
+				case "E":
+					direction = Direction.E;
+					validInput = true;
+					break;
+				case "S":
+					direction = Direction.S;
+					validInput = true;
+					break;
+				case "W":
+					direction = Direction.W;
+					validInput = true;
+					break;
+				default:
+					System.out.println("Invalid direction try again.");
+					break;
 				}
 			}
 		}
@@ -156,9 +163,8 @@ class BattleshipSetupView {
 	 * @return Returns a String example: "B9" translating to the position of the
 	 *         ship.
 	 */
-	public String getPosition(ShipType ship) {
-		System.out.print("Where shall we place " + ship.toString()
-				+ "? (Ex: A1): ");
+	public String getPosition(String shipName) {
+		System.out.print("Where shall we place " + shipName + "? (Ex: A1): ");
 		return input.nextLine();
 	}
 
@@ -189,17 +195,8 @@ class BattleshipSetupView {
 				case OCEAN:
 					tile = "~";
 					break;
-				case SHIP_DESTROYER:
-					tile = "D";
-					break;
-				case SHIP_CRUISER:
-					tile = "C";
-					break;
-				case SHIP_BATTLESHIP:
-					tile = "B";
-					break;
-				case SHIP_CARRIER:
-					tile = "A";
+				case SHIP:
+					tile = "" + model.getShipTypeAtCell(i, j, player).getShipChar();
 					break;
 				}
 				if (j == 0) {
@@ -216,8 +213,8 @@ class BattleshipSetupView {
 		}
 		System.out.println("+");
 		System.out.print("   ");
-		for(int i = 1; i <= model.getBoardSize(); i++) {
-			if(i < 10) {
+		for (int i = 1; i <= model.getBoardSize(); i++) {
+			if (i < 10) {
 				System.out.print(" " + i + "  ");
 			} else {
 				System.out.print(" " + i + " ");
