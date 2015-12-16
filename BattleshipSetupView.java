@@ -17,8 +17,13 @@ class BattleshipSetupView {
 
 	private BattleshipModel model;
 	private Scanner input;
-
-	public BattleshipSetupView(BattleshipModel model) {
+	private int boardSize;
+	//set to true to allow diagonal placement and false otherwise
+	private boolean allowDiagonal;
+	
+	public BattleshipSetupView(BattleshipModel model, int boardSize, boolean allowDiagonal) {
+		this.boardSize = boardSize;
+		this.allowDiagonal = allowDiagonal;
 		input = new Scanner(System.in);
 		this.model = model;
 	}
@@ -69,48 +74,77 @@ class BattleshipSetupView {
 		Direction direction = null;
 		while (!validInput) {
 			String in;
-			System.out.print("What direction shall we place our "
-					+ ship.toString()
-					+ "? (Example: N, NE, E, SE, S, SW, W, NW) ");
-			in = input.nextLine();
-			in = (in == null ? "" : in).toUpperCase().trim();
-            switch (in) {
-                case "N":
-                    direction = Direction.N;
-                    validInput = true;
-                    break;
-                case "NE":
-                    direction = Direction.NE;
-                    validInput = true;
-                    break;
-                case "E":
-                    direction = Direction.E;
-                    validInput = true;
-                    break;
-                case "SE":
-                    direction = Direction.SE;
-                    validInput = true;
-                    break;
-                case "S":
-                    direction = Direction.S;
-                    validInput = true;
-                    break;
-                case "SW":
-                    direction = Direction.SW;
-                    validInput = true;
-                    break;
-                case "W":
-                    direction = Direction.W;
-                    validInput = true;
-                    break;
-                case "NW":
-                    direction = Direction.NW;
-                    validInput = true;
-                    break;
-                default:
-                    System.out.println("Invalid direction try again.");
-                    break;
-            }
+			if(allowDiagonal) {
+				System.out.print("What direction shall we place our "
+						+ ship.toString()
+						+ "? (Example: N, NE, E, SE, S, SW, W, NW) ");
+				in = input.nextLine();
+				in = (in == null ? "" : in).toUpperCase().trim();
+				switch (in) {
+					case "N":
+						direction = Direction.N;
+						validInput = true;
+						break;
+					case "NE":
+						direction = Direction.NE;
+						validInput = true;
+						break;
+					case "E":
+						direction = Direction.E;
+						validInput = true;
+						break;
+					case "SE":
+						direction = Direction.SE;
+						validInput = true;
+						break;
+					case "S":
+						direction = Direction.S;
+						validInput = true;
+						break;
+					case "SW":
+						direction = Direction.SW;
+						validInput = true;
+						break;
+					case "W":
+						direction = Direction.W;
+						validInput = true;
+						break;
+					case "NW":
+						direction = Direction.NW;
+						validInput = true;
+						break;
+					default:
+						System.out.println("Invalid direction try again.");
+						break;
+				}
+			} else {
+				System.out.print("What direction shall we place our "
+						+ ship.toString()
+						+ "? (Example: N, E, S, W) ");
+				in = input.nextLine();
+				in = (in == null ? "" : in).toUpperCase().trim();
+				switch (in) {
+					case "N":
+						direction = Direction.N;
+						validInput = true;
+						break;
+					case "E":
+						direction = Direction.E;
+						validInput = true;
+						break;
+					case "S":
+						direction = Direction.S;
+						validInput = true;
+						break;
+					case "W":
+						direction = Direction.W;
+						validInput = true;
+						break;
+					default:
+						System.out.println("Invalid direction try again.");
+						break;
+				}
+			}
 		}
 		return direction;
 	}
@@ -145,9 +179,9 @@ class BattleshipSetupView {
 		System.out.println(" N ");
 		System.out.println("W+E");
 		System.out.println(" S ");
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			System.out.println("  +---+---+---+---+---+---+---+---+---+---+");
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				String tile = "";
 				switch (defense[i][j]) {
 				case OCEAN:
