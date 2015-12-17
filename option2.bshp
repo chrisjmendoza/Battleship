@@ -1,0 +1,8 @@
+:BOARD_SIZE
+8
+:SWITCH_PLAYER
+true
+:ALLOW_DIAGONAL
+false
+:SHIPS
+Aircraft Carrier|5|A|1~Battleship|4|B|1~Cruiser|3|C|1~Submarine|1|S|2~Destroyer|2|D|2

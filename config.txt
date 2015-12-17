@@ -1,8 +1,0 @@
-:BOARD_SIZE
-10
-:SWITCH_PLAYER
-false
-:ALLOW_DIAGONAL
-false
-:SHIPS
-Aircraft Carrier|4|B|2~Cruiser|3|C|1

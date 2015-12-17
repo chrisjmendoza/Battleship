@@ -18,9 +18,9 @@ class BattleshipKicker {
 		
 		Scanner in = null;
 		try {
-		in = new Scanner(new File("config.txt"));
+		in = new Scanner(new File("battleship.bshp"));
 		} catch(FileNotFoundException e) {
-			System.out.println("File not found, terminating program");
+			System.out.println("File not found, terminating program (looking for battleship.bshp)");
 			System.exit(1);
 		}
 		in.nextLine();	//Skip Board Size label	
