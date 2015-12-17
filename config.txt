@@ -1,0 +1,22 @@
+:BOARD_SIZE
+10
+:SWITCH_PLAYER
+false
+:ALLOW_DIAGONAL
+false
+:SHIPS
+5
+Aircraft Carrier
+A
+4
+Battleship
+B
+3
+Cruiser
+C
+2
+Destroyer
+D
+2
+Destroyer
+D
