@@ -5,18 +5,4 @@ false
 :ALLOW_DIAGONAL
 false
 :SHIPS
-5
-Aircraft Carrier
-A
-4
-Battleship
-B
-3
-Cruiser
-C
-2
-Destroyer
-D
-2
-Destroyer
-D
+Aircraft Carrier|4|B|2~Cruiser|3|C|1

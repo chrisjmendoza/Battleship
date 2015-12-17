@@ -433,9 +433,13 @@ public class BattleshipModel implements IBattleshipModel {
 	 *         column.
 	 */
 	private int[][] getPlayerShipCells(boolean player) {
-		// We can assume length of 16 because we know the count of the
-		// ships and the length of each ship.
-		int[][] shipCells = new int[16][2];
+		int totalLength = 0;
+		for (IShip s : (player ? this.playerOneShips : this.playerTwoShips)) {
+			for (String cell : s.getConsumingCells()) {
+				totalLength++;
+			}
+		}
+		int[][] shipCells = new int[totalLength][2];
 		int i = 0;
 		for (IShip s : (player ? this.playerOneShips : this.playerTwoShips)) {
 			for (String cell : s.getConsumingCells()) {

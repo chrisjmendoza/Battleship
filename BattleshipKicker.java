@@ -17,41 +17,25 @@ class BattleshipKicker {
 	public static void main(String[] args) {
 		
 		Scanner in = null;
-		
 		try {
 		in = new Scanner(new File("config.txt"));
 		} catch(FileNotFoundException e) {
 			System.out.println("File not found, terminating program");
 			System.exit(1);
 		}
-		int boardSize;
-		boolean switchPlayer;
-		boolean allowDiagonal;
-		
-		in.nextLine();		
-		boardSize = Integer.parseInt(in.nextLine());
-		
-		in.nextLine();
-		switchPlayer = (in.nextLine().charAt(0) != 'f');
-		
-		in.nextLine();
-		allowDiagonal = (in.nextLine().charAt(0) != 'f');
-		
-		in.nextLine();
-		while(in.hasNextLine()) {
-			//line initialized with ship size as a String
-			String line = in.nextLine();
-			//line stores ship name
-			line = in.nextLine();
-			//line stores ship symbol
-			line = in.nextLine();
-		}
-		
-		BattleshipModel model = new BattleshipModel(boardSize, switchPlayer);
-		BattleshipSetupView setup = new BattleshipSetupView(model, boardSize, allowDiagonal);
-		BattleshipPlayView play = new BattleshipPlayView(model, boardSize);
+		in.nextLine();	//Skip Board Size label	
+		int boardSize = Integer.parseInt(in.nextLine());
+		in.nextLine(); //Skip Switch player label
+		boolean switchPlayer = (in.nextLine().charAt(0) != 'f');
+		in.nextLine(); //Skip Allow Diagonal label
+		boolean allowDiagonal = (in.nextLine().charAt(0) != 'f');
+		in.nextLine(); // Skip Ships label
+		String shipConfigText = in.nextLine();
+		BattleshipModel model = new BattleshipModel(boardSize, switchPlayer, ShipType.parseFromConfig(shipConfigText));
+		BattleshipSetupView setup = new BattleshipSetupView(model, allowDiagonal);
+		BattleshipPlayView play = new BattleshipPlayView(model);
 
-		System.out.println("Welcome to Battleship!");
+		System.out.println("Welcome to Battleship (V2)!");
 		System.out.println("Created by: Casey Riggin, Christopher Mendoza, Peter Kim, Sai Chang");
 		System.out.println("AKA: Team Rocket.");
 		System.out.println("Class: AD310");

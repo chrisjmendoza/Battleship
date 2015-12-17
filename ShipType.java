@@ -50,7 +50,7 @@ public class ShipType {
 	public static ShipType[] parseFromConfig(String configText)
 	{
 		ArrayList<ShipType> dynamicTypes = new ArrayList<ShipType>();
-		String[] brokenLines = configText.split("\n");
+		String[] brokenLines = configText.split("~");
 		for(int i = 0; i< brokenLines.length; i++)
 		{
 			String[] brokenLine = brokenLines[i].split("\\|");
