@@ -49,7 +49,10 @@ class BattleshipPlayView {
 			}
 			if (yes.equalsIgnoreCase("y")) {
 				askPrompt = false;
-			} else {
+			} 
+			
+			if(askPrompt)
+			{
 				System.out.println("Sorry, you're mumbling. I'll ask again.");
 			}
 		}

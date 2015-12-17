@@ -46,9 +46,7 @@ class BattleshipKicker {
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
-
-		//Go through player one
-
+		
 		boolean playAgain = true;
 		while(playAgain) {
 			setup.collectDataForPlayer(true);
@@ -56,6 +54,8 @@ class BattleshipKicker {
 			playAgain = play.runGame();
 			model.reset();
 		}
+		System.out.println("");
+		System.out.println("Thanks for playing!");
 	}
 	
 	
