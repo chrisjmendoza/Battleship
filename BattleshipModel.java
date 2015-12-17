@@ -294,14 +294,15 @@ public class BattleshipModel implements IBattleshipModel {
 			// report a miss
 			if (getDefenseBoard(!isPlayerTurn())[y][col - 1] == DefenseTileStatus.OCEAN) {
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.MISS;
-				currentPlayersTurn = !currentPlayersTurn; //always swap turns if its a miss
+				currentPlayersTurn = !currentPlayersTurn; // always swap turns
+															// if its a miss
 				return FireResult.MISS;
-			} else { 
+			} else {
 				getOffensiveBoard(isPlayerTurn())[y][col - 1] = OffensiveTileStatus.HIT_SHIP;
 
 				// Check to see if the hit was the last of a known ship
+				boolean sunkShip = false;
 				for (int i = 0; i < playerOneShips.size(); i++) {
-
 					boolean currentShipSunk = true;
 					boolean currentShipWasFiredAtThisTurn = false;
 					IShip currentShip = (!this.currentPlayersTurn ? playerOneShips
@@ -322,8 +323,8 @@ public class BattleshipModel implements IBattleshipModel {
 						}
 
 					}
-					
-					boolean sunkShip = false;
+
+		
 					if (currentShipSunk && currentShipWasFiredAtThisTurn) {
 						// set all cells to the sunk ship type
 						for (int ii = 0; ii < consumingCells.length; ii++) {
@@ -332,21 +333,20 @@ public class BattleshipModel implements IBattleshipModel {
 							int tempCol = Integer.parseInt(consumingCells[ii]
 									.substring(1)) - 1;
 							getOffensiveBoard(this.isPlayerTurn())[tempRow][tempCol] = OffensiveTileStatus.SUNK_SHIP;
-
 						}
 						sunkShip = true;
-					} 
-					
-					if (switchPlayer && !isGameOver()) {
-						currentPlayersTurn = !currentPlayersTurn;
-					}
-					
-					if(sunkShip)
-					{
-						return FireResult.SUNK_SHIP;
 					}
 				}
-				return FireResult.HIT;
+
+				if (switchPlayer && !isGameOver()) {
+					currentPlayersTurn = !currentPlayersTurn;
+				}
+
+				if (sunkShip) {
+					return FireResult.SUNK_SHIP;
+				} else {
+					return FireResult.HIT;
+				}
 			}
 		}
 	}
